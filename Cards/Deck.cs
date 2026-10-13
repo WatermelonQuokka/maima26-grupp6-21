@@ -3,12 +3,20 @@ namespace Tjugoett.Cards;
 public class Deck
 {
     private List<Card> _cards = new();
+    private const int CardsBeforeReshuffle = 15;
 
     public int Count => _cards.Count;
 
 
     public Deck()
     {
+        Reset();
+    }
+
+    private void Reset()
+    {
+        // clears the remaining deck
+        _cards.Clear();
         // looping through enums suits * ranks
         // = total deck (4 * 13) = 52
         foreach(Suit suit in Enum.GetValues<Suit>())
@@ -20,7 +28,9 @@ public class Deck
         }
         Shuffle();
     }
+    
 
+    // draws a card from the top (last index) and removes it from the list
     public Card Draw()
     {
         if (Count == 0)
@@ -41,6 +51,14 @@ public class Deck
             Card temp = _cards[i];
             _cards[i] = _cards[j];
             _cards[j] = temp;
+        }
+    }
+    // reshuffles if the card count is less than the constant
+    public void ReshuffleIfLow()
+    {
+        if (Count < CardsBeforeReshuffle)
+        {
+            Reset();
         }
     }
 }
