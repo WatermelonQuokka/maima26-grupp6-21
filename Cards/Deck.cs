@@ -18,6 +18,7 @@ public class Deck
                 _cards.Add(new Card(suit, rank));
             }
         }
+        Shuffle();
     }
 
     public Card Draw()
@@ -29,5 +30,17 @@ public class Deck
         Card card = _cards[Count - 1];
         _cards.RemoveAt(Count - 1);
         return card;
+    }
+
+    // Fisher-Yates shuffle: start backwards and swap each card with a random card at or before it
+    private void Shuffle()
+    {
+        for (int i = Count - 1; i > 0; i--)
+        {
+            int j = Random.Shared.Next(0, i + 1);
+            Card temp = _cards[i];
+            _cards[i] = _cards[j];
+            _cards[j] = temp;
+        }
     }
 }
