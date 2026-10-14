@@ -40,4 +40,27 @@ public class ConsoleUi
                 Console.WriteLine($"Ogiltig inmatning. Texten får inte vara tom.");
         }
     }
+
+
+public static string ReadChoice(string prompt, List<string> validOption)
+    {
+        while (true)
+        {
+            Console.Write(prompt);
+            string? input = Console.ReadLine();
+
+            if (input == null)
+            {
+                throw new EndOfStreamException("Inmatningen avslutades innan ett värde kunde läsas.");
+            }
+        foreach (string option in validOption)
+            {
+                if (string.Equals(option, input.Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    return option;
+                }
+            }
+            Console.WriteLine($"Ogiltig inmatning. Välj mellan: {string.Join(", ", validOption)}");
+        }
+    }
 }
