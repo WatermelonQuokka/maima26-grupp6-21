@@ -1,5 +1,5 @@
-using System.Collections.Generic;
-namespace Blackjack;
+
+namespace Tjugoett.Cards;
 public class Hand
 {
     private readonly List<Card> _cards = new List<Card>();
