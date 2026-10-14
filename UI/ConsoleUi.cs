@@ -42,7 +42,7 @@ public class ConsoleUi
     }
 
 
-public static string ReadChoice(string prompt, List<string> validOption)
+public static string ReadChoice(string prompt, List<string> validOptions)
     {
         while (true)
         {
@@ -53,14 +53,14 @@ public static string ReadChoice(string prompt, List<string> validOption)
             {
                 throw new EndOfStreamException("Inmatningen avslutades innan ett värde kunde läsas.");
             }
-        foreach (string option in validOption)
+        foreach (string option in validOptions)
             {
                 if (string.Equals(option, input.Trim(), StringComparison.OrdinalIgnoreCase))
                 {
                     return option;
                 }
             }
-            Console.WriteLine($"Ogiltig inmatning. Välj mellan: {string.Join(", ", validOption)}");
+            Console.WriteLine($"Ogiltig inmatning. Välj mellan: {string.Join(", ", validOptions)}");
         }
     }
 }
