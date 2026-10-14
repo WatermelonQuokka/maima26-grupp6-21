@@ -8,3 +8,12 @@ public class Hand
         _cards.Add(card);
     }
 }
+public IReadOnlyList<Card> GetCards()
+    {
+        return _cards.AsReadOnly();
+    }
+    public void Clear()
+    {
+        _cards.Clear();
+    }
+    
