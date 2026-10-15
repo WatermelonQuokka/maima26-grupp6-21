@@ -77,6 +77,7 @@ public class Game
     {
         Console.WriteLine($"{player.Name}, det är din tur.");
     }
+
     // deals two opening cards to each player and the dealer
     private void DealOpeningCards()
     {
@@ -103,26 +104,27 @@ public class Game
     {
         IReadOnlyList<Card> cards = _dealer.Hand.GetCards();
         Console.WriteLine($"{_dealer.Name}s hand:");
-        if(!_dealer.IsHoleCardRevealed)
+        if (!_dealer.IsHoleCardRevealed)
         {
             Console.WriteLine(cards[0]);
             Console.WriteLine("Dolt kort");
         }
         else
         {
-            foreach(Card card in cards)
+            foreach (Card card in cards)
             {
                 Console.WriteLine(card);
             }
         }
     }
+
     // reveals the hole card, then draws until
     // the dealer stands on 17 or higher.
     private void PlayDealerTurn()
     {
         _dealer.RevealHoleCard();
         ShowDealerHand();
-        while(_dealer.ShouldHit())
+        while (_dealer.ShouldHit())
         {
             Card dealerCard = _deck.Draw();
             _dealer.Hand.AddCard(dealerCard);
