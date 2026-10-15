@@ -1,3 +1,4 @@
+using Tjugoett.Cards;
 using Tjugoett.Participants;
 using Tjugoett.UI;
 
@@ -7,7 +8,10 @@ public class Game
 {
     private const int MinPlayers = 1;
     private const int MaxPlayers = 5;
+    private const int OpeningCardCount = 2;
     private readonly List<Player> _players = new();
+    private readonly Deck _deck = new();
+    private readonly Dealer _dealer = new();
 
     public Game()
     {
@@ -59,7 +63,8 @@ public class Game
 
     private void PlayRound()
     {
-        foreach(Player player in _players)
+        DealOpeningCards();
+        foreach (Player player in _players)
         {
             PlayTurn(player);
         }
@@ -69,5 +74,26 @@ public class Game
     private void PlayTurn(Player player)
     {
         Console.WriteLine($"{player.Name}, det är din tur.");
+    }
+    // deals two opening cards to each player and the dealer
+    private void DealOpeningCards()
+    {
+        foreach (Player player in _players)
+        {
+            player.Hand.Clear();
+        }
+        _dealer.Hand.Clear();
+        _deck.ReshuffleIfLow();
+        _dealer.HideHoleCard();
+        for (int i = 0; i < OpeningCardCount; i++)
+        {
+            foreach (Player player in _players)
+            {
+                Card card = _deck.Draw();
+                player.Hand.AddCard(card);
+            }
+            Card dealerCard = _deck.Draw();
+            _dealer.Hand.AddCard(dealerCard);
+        }
     }
 }
