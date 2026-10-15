@@ -69,6 +69,7 @@ public class Game
         {
             PlayTurn(player);
         }
+        PlayDealerTurn();
     }
 
     // Not finished only placeholder - story 13 adds here
@@ -113,6 +114,19 @@ public class Game
             {
                 Console.WriteLine(card);
             }
+        }
+    }
+    // reveals the hole card, then draws until
+    // the dealer stands on 17 or higher.
+    private void PlayDealerTurn()
+    {
+        _dealer.RevealHoleCard();
+        ShowDealerHand();
+        while(_dealer.ShouldHit())
+        {
+            Card dealerCard = _deck.Draw();
+            _dealer.Hand.AddCard(dealerCard);
+            ShowDealerHand();
         }
     }
 }
