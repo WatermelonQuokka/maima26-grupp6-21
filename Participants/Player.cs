@@ -8,4 +8,16 @@ public class Player : Participant
     public Player(string name) : base(name)
     {
     }
+    public void AddWin()
+    {
+        Wins++;
+    }
+    public void AddLoss()
+    {
+        Losses++;
+    }
+    public void AddPush()
+    {
+        Pushes++;
+    }
 }
