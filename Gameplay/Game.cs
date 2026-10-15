@@ -64,6 +64,7 @@ public class Game
     private void PlayRound()
     {
         DealOpeningCards();
+        ShowDealerHand();
         foreach (Player player in _players)
         {
             PlayTurn(player);
@@ -94,6 +95,24 @@ public class Game
             }
             Card dealerCard = _deck.Draw();
             _dealer.Hand.AddCard(dealerCard);
+        }
+    }
+
+    private void ShowDealerHand()
+    {
+        IReadOnlyList<Card> cards = _dealer.Hand.GetCards();
+        Console.WriteLine($"{_dealer.Name}s hand:");
+        if(!_dealer.IsHoleCardRevealed)
+        {
+            Console.WriteLine(cards[0]);
+            Console.WriteLine("Dolt kort");
+        }
+        else
+        {
+            foreach(Card card in cards)
+            {
+                Console.WriteLine(card);
+            }
         }
     }
 }
