@@ -16,6 +16,7 @@ public class Game
     public void Run()
     {
         AddPlayers();
+        PlayRound();
     }
 
     // asks user choice for amount of players
@@ -54,5 +55,19 @@ public class Game
             }
         }
         return false;
+    }
+
+    private void PlayRound()
+    {
+        foreach(Player player in _players)
+        {
+            PlayTurn(player);
+        }
+    }
+
+    // Not finished only placeholder - story 13 adds here
+    private void PlayTurn(Player player)
+    {
+        Console.WriteLine($"{player.Name}, det är din tur.");
     }
 }
