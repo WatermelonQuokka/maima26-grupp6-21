@@ -34,7 +34,7 @@ public class Hand
         if (card.Rank == Rank.Ace)
         {
             aceCount++;
-            total += 14; // Startvärde för ess i Tjugoett
+            total += 11; // Startvärde för ess i Tjugoett
         }
         else if (card.Rank == Rank.Jack || card.Rank == Rank.Queen || card.Rank == Rank.King)
         {
@@ -49,7 +49,7 @@ public class Hand
     // Om totalen överstiger 21 ändras essets värde till 1 (minskar med 13)
     while (total > 21 && aceCount > 0)
     {
-        total -= 13;
+        total -= 10;
         aceCount--;
     }
 
