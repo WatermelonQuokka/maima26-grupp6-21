@@ -55,8 +55,13 @@ public class Round
             }
         }
         while (move == Move.Hit && !player.Hand.IsBust());
+    
+    // Skriv ut "Spräckt!" om spelaren har spräckt
+    if (player.Hand.IsBust())
+    {
+        Console.WriteLine("Spräckt!");
     }
-
+    }
     // deals two opening cards to each player and the dealer
     private void DealOpeningCards()
     {
