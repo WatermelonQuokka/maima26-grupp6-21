@@ -34,9 +34,9 @@ public class Round
     private void PlayTurn(Player player)
     {
         Console.WriteLine($"{player.Name}, det är din tur.");
-        if (player.Hand.GetValue() == 21)
+        if (player.Hand.IsNatural)
         {
-            Console.WriteLine($"{player.Name} har redan 21 och hoppar över sin tur.");
+            Console.WriteLine($"{player.Name} har Naturlig tjugoett! och hoppar över sin tur.");
         }
         Card dealerUpCard = _dealer.Hand.GetCards()[0];
         Console.WriteLine($"{_dealer.Name} visar: {dealerUpCard}");
