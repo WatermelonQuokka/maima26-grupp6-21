@@ -46,7 +46,7 @@ public class Hand
         }
     }
 
-    // Om totalen överstiger 21 ändras essets värde till 1 (minskar med 13)
+    // Om totalen överstiger 21 ändras essets värde till 1 (minskar med 10)
     while (total > 21 && aceCount > 0)
     {
         total -= 10;
