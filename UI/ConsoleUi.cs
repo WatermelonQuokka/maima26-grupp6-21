@@ -1,4 +1,6 @@
 using Tjugoett.Participants;
+using Tjugoett.Cards;
+
 
 namespace Tjugoett.UI;
 
@@ -76,5 +78,14 @@ public static void ShowStatistics(List<Player> players)
         }
         Console.WriteLine();
     }
+public static void ShowHand(Participant participant)
+{
+    List<string> cards = new();
+    foreach (Card card in participant.Hand.GetCards())
+    {
+        cards.Add(card.ToString());
+    }
+    Console.WriteLine($"{participant.Name}: {string.Join(", ", cards)} = {participant.Hand.GetTotalValue()}");
+}
 
 }
