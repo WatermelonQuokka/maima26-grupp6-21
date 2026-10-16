@@ -121,7 +121,8 @@ public static void ShowStatistics(List<Player> players)
 
         if (!hideSecondCard || participant is not Dealer)
         {
-            Console.WriteLine($"Poäng: {participant.Hand.GetTotalValue()}");
+            string softText = participant.Hand.IsSoft() ? " (mjuk)" : "";
+            Console.WriteLine($"Poäng: {participant.Hand.GetTotalValue()}{softText}");
         }
         Console.WriteLine();
     }
