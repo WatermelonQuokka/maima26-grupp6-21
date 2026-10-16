@@ -57,7 +57,7 @@ public class Hand
 }
 
     // Upptäcker naturlig tjugoett (exakt två kort med värdet 21)
-    public bool IsNatural => _cards.Count == 2 && GetValue() == 21;
+    public bool IsNatural => _cards.Count == 2 && GetTotalValue() == 21;
 
     // Kontrollerar om handen har spruckit (värde över 21)
     public bool IsBust()
