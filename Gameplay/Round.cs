@@ -37,18 +37,18 @@ public class Round
         Card dealerUpCard = _dealer.Hand.GetCards()[0];
         Console.WriteLine($"{_dealer.Name} visar: {dealerUpCard}");
         Move move;
+        ConsoleUi.ShowHand(player);
         do
         {
-            ShowPlayerHand(player);
             move = player.MoveDecider.DecideMove(player.Hand, dealerUpCard);
             if (move == Move.Hit)
             {
                 Card card = _deck.Draw();
                 player.Hand.AddCard(card);
+                ConsoleUi.ShowHand(player);
             }
         }
         while (move == Move.Hit && !player.Hand.IsBust());
-        ShowPlayerHand(player);
     }
 
     // deals two opening cards to each player and the dealer
@@ -91,15 +91,5 @@ public class Round
             _dealer.Hand.AddCard(dealerCard);
             ShowDealerHand();
         }
-    }
-
-    private void ShowPlayerHand(Player player)
-    {
-        IReadOnlyList<Card> cards = player.Hand.GetCards();
-        Console.WriteLine($"{player.Name}s hand:");
-        foreach (Card card in cards)
-        {
-            Console.WriteLine(card);
-        }
-    }
+    }    
 }
