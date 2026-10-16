@@ -1,3 +1,7 @@
+using Tjugoett.Participants;
+using Tjugoett.Cards;
+
+
 namespace Tjugoett.UI;
 
 public class ConsoleUi
@@ -63,4 +67,25 @@ public static string ReadChoice(string prompt, List<string> validOptions)
             Console.WriteLine($"Ogiltig inmatning. Välj mellan: {string.Join(", ", validOptions)}");
         }
     }
+public static void ShowStatistics(List<Player> players)
+    {
+    Console.WriteLine("\n--- SPELSTATISTIK ---");
+    Console.WriteLine("Namn\tVinster\tFörluster\tLika");
+
+    foreach (Player player in players)
+        {
+            Console.WriteLine($"{player.Name}\t{player.Wins}\t{player.Losses}\t{player.Pushes}");
+        }
+        Console.WriteLine();
+    }
+public static void ShowHand(Participant participant)
+{
+    List<string> cards = new();
+    foreach (Card card in participant.Hand.GetCards())
+    {
+        cards.Add(card.ToString());
+    }
+    Console.WriteLine($"{participant.Name}: {string.Join(", ", cards)} = {participant.Hand.GetTotalValue()}");
+}
+
 }
