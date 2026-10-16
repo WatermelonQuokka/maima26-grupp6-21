@@ -7,7 +7,12 @@ public static class CardRenderer
     private const int InnerWidth = 7;
     public static string[] RenderCard(Card card, bool faceUp)
     {
-        string horizontalLine = new string('─', InnerWidth);
+        string horizontalLine = HorizontalBorder();
+        if (!faceUp)
+        {
+            return RenderBack(horizontalLine);
+        }
+
         string emptyLine = new string(' ', InnerWidth);
 
         string rank = RankText(card.Rank);
@@ -23,6 +28,25 @@ public static class CardRenderer
             $"└{horizontalLine}┘"
         ];
     }
+
+    private static string HorizontalBorder() => new string('─', InnerWidth);
+
+    private static string[] RenderBack(string horizontalLine)
+    {
+        string patternLine = new string('▒', InnerWidth);
+
+        return [
+            $"┌{horizontalLine}┐",
+            $"│{patternLine}│",
+            $"│{patternLine}│",
+            $"│{patternLine}│",
+            $"│{patternLine}│",
+            $"│{patternLine}│",
+            $"└{horizontalLine}┘"
+        ];
+    }
+
+
 
     private static string RankText(Rank rank) => rank switch
     {
