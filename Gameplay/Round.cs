@@ -75,20 +75,8 @@ public class Round
 
     private void ShowDealerHand()
     {
-        IReadOnlyList<Card> cards = _dealer.Hand.GetCards();
-        Console.WriteLine($"{_dealer.Name}s hand:");
-        if (!_dealer.IsHoleCardRevealed)
-        {
-            Console.WriteLine(cards[0]);
-            Console.WriteLine("Dolt kort");
-        }
-        else
-        {
-            foreach (Card card in cards)
-            {
-                Console.WriteLine(card);
-            }
-        }
+        bool hideSecondCard = !_dealer.IsHoleCardRevealed;
+        ConsoleUi.ShowHand(_dealer, hideSecondCard);
     }
 
     // reveals the hole card, then draws until
