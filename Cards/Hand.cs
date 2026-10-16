@@ -62,5 +62,33 @@ namespace Tjugoett.Cards
         {
             return GetTotalValue() > 21;
         }
+
+        
+        public bool IsSoft()
+        {
+            int hardTotal = 0;
+            int aceCount = 0;
+
+            foreach (var card in _cards)
+            {
+                switch (card.Rank)
+                {
+                    case Rank.Ace:
+                        hardTotal += 1;
+                        aceCount++;
+                        break;
+                    case Rank.Jack:
+                    case Rank.Queen:
+                    case Rank.King:
+                        hardTotal += 10;
+                        break;
+                    default:
+                        hardTotal += (int)card.Rank;
+                        break;
+                }
+            }
+            return aceCount > 0 && hardTotal + 10 <= 21;
+        }
+
     }
 }
