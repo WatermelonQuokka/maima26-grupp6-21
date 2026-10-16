@@ -28,10 +28,26 @@ public class Round
         PlayDealerTurn();
     }
 
-    // Not finished only placeholder - story 13 adds here
+    // ask the players movedecider for hit or stand
+    // deals a card on hit, repeats until player stand or bust
     private void PlayTurn(Player player)
     {
         Console.WriteLine($"{player.Name}, det är din tur.");
+        Card dealerUpCard = _dealer.Hand.GetCards()[0];
+        Console.WriteLine($"{_dealer.Name} visar: {dealerUpCard}");
+        Move move;
+        do
+        {
+            ShowPlayerHand(player);
+            move = player.MoveDecider.DecideMove(player.Hand, dealerUpCard);
+            if (move == Move.Hit)
+            {
+                Card card = _deck.Draw();
+                player.Hand.AddCard(card);
+            }
+        }
+        while (move == Move.Hit && !player.Hand.IsBust());
+        ShowPlayerHand(player);
     }
 
     // deals two opening cards to each player and the dealer
@@ -85,6 +101,16 @@ public class Round
             Card dealerCard = _deck.Draw();
             _dealer.Hand.AddCard(dealerCard);
             ShowDealerHand();
+        }
+    }
+
+    private void ShowPlayerHand(Player player)
+    {
+        IReadOnlyList<Card> cards = player.Hand.GetCards();
+        Console.WriteLine($"{player.Name}s hand:");
+        foreach (Card card in cards)
+        {
+            Console.WriteLine(card);
         }
     }
 }

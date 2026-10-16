@@ -41,7 +41,7 @@ public class Game
                 }
             }
             while (IsNameTaken(name));
-            _players.Add(new Player(name));
+            _players.Add(new Player(name, new HumanMoveDecider()));
         }
     }
 
