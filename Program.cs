@@ -4,6 +4,7 @@ try
 {
     Game game = new Game();
     game.Run();
+
 }
 catch (EndOfStreamException)
 {

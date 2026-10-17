@@ -27,6 +27,32 @@ public class Round
             PlayTurn(player);
         }
         PlayDealerTurn();
+
+        Console.WriteLine();
+
+        foreach (Player player in _players)
+        {
+            RoundResult result = RoundEvaluator.Evaluate(player.Hand, _dealer.Hand);
+            RecordResult(player, result);
+            ConsoleUi.ShowResult(player, result);
+        }
+    }
+
+    private static void RecordResult(Player player, RoundResult result)
+    {
+        switch (result)
+        {
+            case RoundResult.Win:
+            case RoundResult.Blackjack:
+                player.AddWin();
+                break;
+            case RoundResult.Lose:
+                player.AddLoss();
+                break;
+            case RoundResult.Push:
+                player.AddPush();
+                break;
+        }
     }
 
     // ask the players movedecider for hit or stand
@@ -34,6 +60,12 @@ public class Round
     private void PlayTurn(Player player)
     {
         Console.WriteLine($"{player.Name}, det är din tur.");
+        // Hoppa över turen om spelaren har en naturlig tjugoett 
+        if (player.Hand.IsNatural)
+        {
+            Console.WriteLine("hoppar över sin tur.");
+            return; //Avsluta metoden direkt
+        }
         Card dealerUpCard = _dealer.Hand.GetCards()[0];
         Console.WriteLine($"{_dealer.Name} visar: {dealerUpCard}");
         Move move;
@@ -49,8 +81,13 @@ public class Round
             }
         }
         while (move == Move.Hit && !player.Hand.IsBust());
+    
+    // Skriv ut "Spräckt!" om spelaren har spräckt
+    if (player.Hand.IsBust())
+    {
+        Console.WriteLine("Spräckt!");
     }
-
+    }
     // deals two opening cards to each player and the dealer
     private void DealOpeningCards()
     {
@@ -75,20 +112,8 @@ public class Round
 
     private void ShowDealerHand()
     {
-        IReadOnlyList<Card> cards = _dealer.Hand.GetCards();
-        Console.WriteLine($"{_dealer.Name}s hand:");
-        if (!_dealer.IsHoleCardRevealed)
-        {
-            Console.WriteLine(cards[0]);
-            Console.WriteLine("Dolt kort");
-        }
-        else
-        {
-            foreach (Card card in cards)
-            {
-                Console.WriteLine(card);
-            }
-        }
+        bool hideSecondCard = !_dealer.IsHoleCardRevealed;
+        ConsoleUi.ShowHand(_dealer, hideSecondCard);
     }
 
     // reveals the hole card, then draws until
@@ -103,5 +128,5 @@ public class Round
             _dealer.Hand.AddCard(dealerCard);
             ShowDealerHand();
         }
-    }    
+    }
 }

@@ -1,6 +1,7 @@
 using Tjugoett.Cards;
 using Tjugoett.Participants;
 using Tjugoett.UI;
+using Tjugoett.Storage;
 
 namespace Tjugoett.Gameplay;
 
@@ -9,10 +10,12 @@ public class Game
     private const int MinPlayers = 1;
     private const int MaxPlayers = 5;
     private readonly List<Player> _players = new();
+    private readonly List<Player> _savedPlayers;
     private readonly Deck _deck = new();
     private readonly Dealer _dealer = new();
     public Game()
     {
+        _savedPlayers = GameStorage.Load();
     }
 
     public void Run()
@@ -20,6 +23,7 @@ public class Game
         AddPlayers();
         Round round = new(_players, _deck, _dealer);
         round.Play();
+        GameStorage.Save(_savedPlayers);
     }
 
     // asks user choice for amount of players
@@ -48,7 +52,18 @@ public class Game
                     }
                 }
                 while (IsNameTaken(name));
-                _players.Add(new Player(name, new HumanMoveDecider()));
+                
+                Player? existingPlayer = FindSavedPlayer(name);
+                if (existingPlayer != null)
+                {
+                    _players.Add(existingPlayer);
+                }
+                else
+                {
+                    Player newPlayer = new Player(name, new HumanMoveDecider());
+                    _savedPlayers.Add(newPlayer);
+                    _players.Add(newPlayer);
+                }
             }
             else
             {
@@ -77,5 +92,16 @@ public class Game
             }
         }
         return false;
+    }
+    private Player? FindSavedPlayer(string name)
+    {
+        foreach (Player player in _savedPlayers)
+        {
+            if (string.Equals(player.Name, name, StringComparison.OrdinalIgnoreCase))
+            {
+                return player;
+            }
+        }
+        return null;
     }
 }
