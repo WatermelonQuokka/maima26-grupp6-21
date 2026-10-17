@@ -1,4 +1,5 @@
 using Tjugoett.Cards;
+using Tjugoett.Gameplay;
 using Tjugoett.Graphics;
 using Tjugoett.Participants;
 
@@ -125,5 +126,19 @@ public static void ShowStatistics(List<Player> players)
             Console.WriteLine($"Poäng: {participant.Hand.GetTotalValue()}{softText}");
         }
         Console.WriteLine();
+    }
+
+    public static void ShowResult(Player player, RoundResult result)
+    {
+        string message = result switch
+        {
+            RoundResult.Win => $"{player.Name} vinner!",
+            RoundResult.Lose => $"{player.Name} förlorar.",
+            RoundResult.Push => $"{player.Name}: lika.",
+            RoundResult.Blackjack => $"{player.Name} har naturlig tjugoett och vinner!",
+            _ => throw new ArgumentOutOfRangeException(nameof(result), result, null)
+        };
+
+        Console.WriteLine(message);
     }
 }
