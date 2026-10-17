@@ -34,6 +34,12 @@ public class Round
     private void PlayTurn(Player player)
     {
         Console.WriteLine($"{player.Name}, det är din tur.");
+        // Hoppa över turen om spelaren har en naturlig tjugoett 
+        if (player.Hand.IsNatural)
+        {
+            Console.WriteLine("hoppar över sin tur.");
+            return; //Avsluta metoden direkt
+        }
         Card dealerUpCard = _dealer.Hand.GetCards()[0];
         Console.WriteLine($"{_dealer.Name} visar: {dealerUpCard}");
         Move move;
@@ -49,8 +55,13 @@ public class Round
             }
         }
         while (move == Move.Hit && !player.Hand.IsBust());
+    
+    // Skriv ut "Spräckt!" om spelaren har spräckt
+    if (player.Hand.IsBust())
+    {
+        Console.WriteLine("Spräckt!");
     }
-
+    }
     // deals two opening cards to each player and the dealer
     private void DealOpeningCards()
     {
