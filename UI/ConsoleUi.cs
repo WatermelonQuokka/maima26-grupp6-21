@@ -7,6 +7,17 @@ namespace Tjugoett.UI;
 
 public static class ConsoleUi
 {
+    // Frågar om användaren vill spela igen.
+    public static bool AskToPlayAgain()
+    {
+        Console.Write("\nVill du spela igen? (j/n):");
+        string? input = Console.ReadLine()?.Trim().ToLower();
+        if (input == "j" || input == "ja")
+        {
+            return true;
+        }
+        return false;
+    }
     public static int ReadInt(string prompt, int min, int max)
     {
     while (true)
