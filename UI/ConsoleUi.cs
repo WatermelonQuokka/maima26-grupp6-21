@@ -7,6 +7,28 @@ namespace Tjugoett.UI;
 
 public static class ConsoleUi
 {
+    // Frågar om användaren vill spela igen.
+    public static bool AskToPlayAgain()
+    {
+        while (true)
+        {
+          Console.Write("\nVill du spela igen? (j/n):");
+        string? input = Console.ReadLine()?.Trim().ToLower();
+        if (input == "j" || input == "ja")
+        {
+            return true;
+        }
+        else if (input == "n" || input == "nej")
+        {
+           return false;  
+        }
+        // Fwlmwddelande för ogiltig inmatning
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("Ogiltigt val! Ange 'j' för ja eller 'n' för nej.");
+        Console.ResetColor();  
+        }
+        
+    }
     public static int ReadInt(string prompt, int min, int max)
     {
     while (true)
