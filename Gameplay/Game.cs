@@ -23,6 +23,7 @@ public class Game
         AddPlayers();
         Round round = new(_players, _deck, _dealer);
         round.Play();
+        GameStorage.Save(_savedPlayers);
     }
 
     // asks user choice for amount of players
@@ -44,7 +45,7 @@ public class Game
                 }
             }
             while (IsNameTaken(name));
-            
+
             Player? existingPlayer = FindSavedPlayer(name);
             if (existingPlayer != null)
             {
