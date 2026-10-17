@@ -27,6 +27,32 @@ public class Round
             PlayTurn(player);
         }
         PlayDealerTurn();
+
+        Console.WriteLine();
+
+        foreach (Player player in _players)
+        {
+            RoundResult result = RoundEvaluator.Evaluate(player.Hand, _dealer.Hand);
+            RecordResult(player, result);
+            ConsoleUi.ShowResult(player, result);
+        }
+    }
+
+    private static void RecordResult(Player player, RoundResult result)
+    {
+        switch (result)
+        {
+            case RoundResult.Win:
+            case RoundResult.Blackjack:
+                player.AddWin();
+                break;
+            case RoundResult.Lose:
+                player.AddLoss();
+                break;
+            case RoundResult.Push:
+                player.AddPush();
+                break;
+        }
     }
 
     // ask the players movedecider for hit or stand
@@ -102,5 +128,5 @@ public class Round
             _dealer.Hand.AddCard(dealerCard);
             ShowDealerHand();
         }
-    }    
+    }
 }
