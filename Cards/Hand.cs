@@ -12,34 +12,32 @@ public class Hand
         {
             _cards.Add(card);
         }
+    }
 
-        
-        public bool IsSoft()
+    public bool IsSoft()
+    {
+        int hardTotal = 0;
+        int aceCount = 0;
+
+        foreach (var card in _cards)
         {
-            int hardTotal = 0;
-            int aceCount = 0;
-
-            foreach (var card in _cards)
+            switch (card.Rank)
             {
-                switch (card.Rank)
-                {
-                    case Rank.Ace:
-                        hardTotal += 1;
-                        aceCount++;
-                        break;
-                    case Rank.Jack:
-                    case Rank.Queen:
-                    case Rank.King:
-                        hardTotal += 10;
-                        break;
-                    default:
-                        hardTotal += (int)card.Rank;
-                        break;
-                }
+                case Rank.Ace:
+                    hardTotal += 1;
+                    aceCount++;
+                    break;
+                case Rank.Jack:
+                case Rank.Queen:
+                case Rank.King:
+                    hardTotal += 10;
+                    break;
+                default:
+                    hardTotal += (int)card.Rank;
+                    break;
             }
-            return aceCount > 0 && hardTotal + 10 <= 21;
         }
-
+        return aceCount > 0 && hardTotal + 10 <= 21;
     }
 
     public void Clear()
@@ -82,7 +80,7 @@ public class Hand
         }
 
         return total;
-        }
+    }
 
     // Upptäcker naturlig tjugoett (exakt två kort med värdet 21)
     public bool IsNatural => _cards.Count == 2 && GetTotalValue() == 21;
