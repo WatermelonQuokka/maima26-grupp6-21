@@ -25,4 +25,11 @@ public class Player : Participant
     {
         Pushes++;
     }
+
+    internal void RestoreStats(int wins, int losses, int pushes)
+    {
+        Wins = wins;
+        Losses = losses;
+        Pushes = pushes;
+    }
 }
