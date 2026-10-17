@@ -12,34 +12,32 @@ public class Hand
         {
             _cards.Add(card);
         }
+    }
 
-        
-        public bool IsSoft()
+    public bool IsSoft()
+    {
+        int hardTotal = 0;
+        int aceCount = 0;
+
+        foreach (var card in _cards)
         {
-            int hardTotal = 0;
-            int aceCount = 0;
-
-            foreach (var card in _cards)
+            switch (card.Rank)
             {
-                switch (card.Rank)
-                {
-                    case Rank.Ace:
-                        hardTotal += 1;
-                        aceCount++;
-                        break;
-                    case Rank.Jack:
-                    case Rank.Queen:
-                    case Rank.King:
-                        hardTotal += 10;
-                        break;
-                    default:
-                        hardTotal += (int)card.Rank;
-                        break;
-                }
+                case Rank.Ace:
+                    hardTotal += 1;
+                    aceCount++;
+                    break;
+                case Rank.Jack:
+                case Rank.Queen:
+                case Rank.King:
+                    hardTotal += 10;
+                    break;
+                default:
+                    hardTotal += (int)card.Rank;
+                    break;
             }
-            return aceCount > 0 && hardTotal + 10 <= 21;
         }
-
+        return aceCount > 0 && hardTotal + 10 <= 21;
     }
 
     public void Clear()
@@ -52,37 +50,37 @@ public class Hand
         return _cards.AsReadOnly();
     }
     // Beräknar det totala värdet för handen
-    public int GetValue()
-{
-    int total = 0;
-    int aceCount = 0;
-
-    foreach (var card in _cards)
+    public int GetTotalValue()
     {
-        if (card.Rank == Rank.Ace)
-        {
-            aceCount++;
-            total += 11; // Startvärde för ess i Tjugoett
-        }
-        else if (card.Rank == Rank.Jack || card.Rank == Rank.Queen || card.Rank == Rank.King)
-        {
-            total += 10; // Klädda kort är värda 10
-        }
-        else
-        {
-            total += (int)card.Rank; // Värdet för övriga nummerkort
-        }
-    }
+        int total = 0;
+        int aceCount = 0;
 
-    // Om totalen överstiger 21 ändras essets värde till 1 (minskar med 10)
-    while (total > 21 && aceCount > 0)
-    {
-        total -= 10;
-        aceCount--;
-    }
+        foreach (var card in _cards)
+        {
+            if (card.Rank == Rank.Ace)
+            {
+                aceCount++;
+                total += 11; // Startvärde för ess i Tjugoett
+            }
+            else if (card.Rank == Rank.Jack || card.Rank == Rank.Queen || card.Rank == Rank.King)
+            {
+                total += 10; // Klädda kort är värda 10
+            }
+            else
+            {
+                total += (int)card.Rank; // Värdet för övriga nummerkort
+            }
+        }
 
-    return total;
-}
+        // Om totalen överstiger 21 ändras essets värde till 1 (minskar med 10)
+        while (total > 21 && aceCount > 0)
+        {
+            total -= 10;
+            aceCount--;
+        }
+
+        return total;
+    }
 
     // Upptäcker naturlig tjugoett (exakt två kort med värdet 21)
     public bool IsNatural => _cards.Count == 2 && GetTotalValue() == 21;
@@ -90,10 +88,6 @@ public class Hand
     // Kontrollerar om handen har spruckit (värde över 21)
     public bool IsBust()
     {
-        return GetValue() > 21;
-    }
-    public int GetTotalValue()
-    {
-        return GetValue();
+        return GetTotalValue() > 21;
     }
 }
