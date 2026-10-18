@@ -10,23 +10,9 @@ public static class ConsoleUi
     // Frågar om användaren vill spela igen.
     public static bool AskToPlayAgain()
     {
-        while (true)
-        {
-          Console.Write("\nVill du spela igen? (j/n):");
-        string? input = Console.ReadLine()?.Trim().ToLower();
-        if (input == "j" || input == "ja")
-        {
-            return true;
-        }
-        else if (input == "n" || input == "nej")
-        {
-           return false;  
-        }
-        // Felmeddelande för ogiltig inmatning
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("Ogiltigt val! Ange 'j' för ja eller 'n' för nej.");
-        Console.ResetColor();  
-        }
+       // Use ReadChoice to get a valid response from the user
+       string choice = ReadChoice("\nVill du spela igen? (j/n): ", ["j", "ja", "n", "nej"]);
+       return choice == "j" || choice == "ja";
         
     }
     public static int ReadInt(string prompt, int min, int max)
