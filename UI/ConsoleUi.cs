@@ -7,6 +7,13 @@ namespace Tjugoett.UI;
 
 public static class ConsoleUi
 {
+    // Frågar om användaren vill spela igen.
+    public static bool AskToPlayAgain()
+    {
+      // Use ReadChoice to get a valid response from the user
+       string choice = ReadChoice("\nVill du spela igen? (j/n): ", ["j", "ja", "n", "nej"]);
+       return choice == "j" || choice == "ja";
+    }
     public static int ReadInt(string prompt, int min, int max)
     {
     while (true)
