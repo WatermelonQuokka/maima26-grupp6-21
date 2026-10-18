@@ -1,9 +1,9 @@
 ﻿using Tjugoett.Gameplay;
-
+using Tjugoett.UI;
 try
 {
     Game game = new Game();
-    game.Run();
+    game.Run(); 
 }
 catch (EndOfStreamException)
 {
