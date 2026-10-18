@@ -28,7 +28,7 @@ public class Game
         {
             Round round = new(_players, _deck, _dealer);
             round.Play();
-            GameStorage.Save(_savedPlayers);  
+            GameStorage.Save(_savedPlayers);
             // Ask if players want to play another round
             playAgain = ConsoleUi.AskToPlayAgain();
         } while (playAgain);
@@ -61,7 +61,7 @@ public class Game
                     }
                 }
                 while (IsNameTaken(name));
-                
+
                 Player? existingPlayer = FindSavedPlayer(name);
                 if (existingPlayer != null)
                 {
@@ -76,6 +76,7 @@ public class Game
             }
             else
             {
+                IMoveDecider moveDecider;
                 string name;
                 do
                 {
@@ -83,7 +84,16 @@ public class Game
                     name = $"Dator {computerCount}";
                 }
                 while (IsNameTaken(name));
-                _players.Add(new Player(name, new SimpleMoveDecider()));
+                string strategyChoice = ConsoleUi.ReadChoice($"{name}: Vilken strategi vill du välja? Simpel eller Grund (s/g): ", new List<string> { "s", "simpel", "g", "grund" });
+                if (strategyChoice == "s" || strategyChoice == "simpel")
+                {
+                    moveDecider = new SimpleMoveDecider();
+                }
+                else
+                {
+                    moveDecider = new BasicStrategyMoveDecider();
+                }
+                _players.Add(new Player(name, moveDecider));
             }
         }
     }
