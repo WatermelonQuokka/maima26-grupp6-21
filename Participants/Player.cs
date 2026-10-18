@@ -1,4 +1,4 @@
-using Tjugoett.Gameplay;
+using Tjugoett.Deciders;
 
 namespace Tjugoett.Participants;
 

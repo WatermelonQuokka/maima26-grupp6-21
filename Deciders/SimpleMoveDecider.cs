@@ -1,6 +1,7 @@
 using Tjugoett.Cards;
+using Tjugoett.Gameplay;
 
-namespace Tjugoett.Gameplay;
+namespace Tjugoett.Deciders;
 
 public class SimpleMoveDecider : IMoveDecider
 {
