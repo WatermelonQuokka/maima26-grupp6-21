@@ -21,5 +21,51 @@ public class BasicStrategyMoveDecider : IMoveDecider
     ];
     public Move DecideMove(Hand playerHand, Card dealerUpCard)
     {
+        int total = playerHand.GetTotalValue();
+        int column = DealerColumn(dealerUpCard);
+
+        if (playerHand.IsSoft())
+        {
+            // which soft row is player hand
+            // return move
+        }
+        else
+        {
+            // which hard row is player hand
+            // return move
+        }
+    }
+
+    private static int DealerColumn(Card dealerUpCard)
+    {
+        return dealerUpCard.Rank switch
+        {
+            Rank.Jack or Rank.Queen or Rank.King => 8,
+            Rank.Ace => 9,
+            _ => (int)dealerUpCard.Rank - 2
+        };
+    }
+
+    private static int SoftRow(int total)
+    {
+        return total switch
+        {
+            >= 12 and <= 17 => 0,
+            18 => 1,
+            >= 19 and <= 21 => 2,
+            _ => throw new ArgumentOutOfRangeException(nameof(total), total, "Finns inte med i soft-tabellen.")
+        };
+    }
+
+    private static int HardRow(int total)
+    {
+        return total switch
+        {
+            >= 4 and <= 11 => 0,
+            12 => 1,
+            >= 13 and <= 16 => 2,
+            >= 17 and <= 21 => 3,
+            _ => throw new ArgumentOutOfRangeException(nameof(total), total, "Finns inte med i hard-tabellen.")
+        };
     }
 }
