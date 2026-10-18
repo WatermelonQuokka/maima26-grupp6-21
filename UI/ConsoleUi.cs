@@ -22,7 +22,7 @@ public static class ConsoleUi
         {
            return false;  
         }
-        // Fwlmwddelande för ogiltig inmatning
+        // Felmeddelande för ogiltig inmatning
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("Ogiltigt val! Ange 'j' för ja eller 'n' för nej.");
         Console.ResetColor();  
