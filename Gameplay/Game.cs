@@ -20,10 +20,19 @@ public class Game
 
     public void Run()
     {
+        // Add players only once at the begining
         AddPlayers();
-        Round round = new(_players, _deck, _dealer);
-        round.Play();
-        GameStorage.Save(_savedPlayers);
+        bool playAgain;
+        // Main game loop for rounds
+        do
+        {
+            Round round = new(_players, _deck, _dealer);
+            round.Play();
+            GameStorage.Save(_savedPlayers);  
+            // Ask if players want to play another round
+            playAgain = ConsoleUi.AskToPlayAgain();
+        } while (playAgain);
+        Console.WriteLine("\nTack för att du spelade Tjugoett! Hej då!");    
     }
 
     // asks user choice for amount of players
