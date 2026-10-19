@@ -1,6 +1,6 @@
 using System.Text.Json;
 using Tjugoett.Participants;
-using Tjugoett.Gameplay;
+using Tjugoett.Deciders;
 
 namespace Tjugoett.Storage;
 
