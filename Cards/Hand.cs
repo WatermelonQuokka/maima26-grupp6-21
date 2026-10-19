@@ -19,7 +19,7 @@ public class Hand
         int hardTotal = 0;
         int aceCount = 0;
 
-        foreach (var card in _cards)
+        foreach (Card card in _cards)
         {
             switch (card.Rank)
             {
