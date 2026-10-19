@@ -12,8 +12,8 @@ public static class GameStorage
 
     public static void Save(List<Player> players)
     {
-        var records = new List<PlayerRecord>();
-        foreach (var player in players)
+        List<PlayerRecord> records = new List<PlayerRecord>();
+        foreach (Player player in players)
         {
             records.Add(new PlayerRecord
             {
@@ -24,7 +24,7 @@ public static class GameStorage
             });
         }
 
-        var options = new JsonSerializerOptions { WriteIndented = true };
+        JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
         string json = JsonSerializer.Serialize(records, options);
 
         Directory.CreateDirectory(FolderPath);
@@ -41,10 +41,10 @@ public static class GameStorage
         try
         {
             string json = File.ReadAllText(FilePath);
-            var records = JsonSerializer.Deserialize<List<PlayerRecord>>(json) ?? new List<PlayerRecord>();
+            List<PlayerRecord> records = JsonSerializer.Deserialize<List<PlayerRecord>>(json) ?? new List<PlayerRecord>();
 
             List<Player> players = new List<Player>();
-            foreach (var record in records)
+            foreach (PlayerRecord record in records)
             {
                 Player player = new Player(record.Name, new HumanMoveDecider());
                 player.RestoreStats(record.Wins, record.Losses, record.Pushes);
@@ -53,9 +53,9 @@ public static class GameStorage
 
             return players;
         }
-        catch (JsonException ex)
+        catch (JsonException)
         {
-            Console.WriteLine($"Varning: Kunde inte tolka sparfilen ({ex.Message}). Startar med tom spelarlista.");
+            Console.WriteLine($"Varning: Kunde inte tolka sparfilen. Startar med tom spelarlista.");
             return new List<Player>();
         }
     }
