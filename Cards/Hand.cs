@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace Tjugoett.Cards;
+namespace TwentyOne.Cards;
 
 public class Hand
 {
@@ -60,7 +58,7 @@ public class Hand
             if (card.Rank == Rank.Ace)
             {
                 aceCount++;
-                total += 11; // Startvärde för ess i Tjugoett
+                total += 11; // Startvärde för ess i tjugoett
             }
             else if (card.Rank == Rank.Jack || card.Rank == Rank.Queen || card.Rank == Rank.King)
             {

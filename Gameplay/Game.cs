@@ -1,10 +1,10 @@
-using Tjugoett.Cards;
-using Tjugoett.Participants;
-using Tjugoett.UI;
-using Tjugoett.Storage;
-using Tjugoett.Deciders;
+using TwentyOne.Cards;
+using TwentyOne.Participants;
+using TwentyOne.UI;
+using TwentyOne.Storage;
+using TwentyOne.Deciders;
 
-namespace Tjugoett.Gameplay;
+namespace TwentyOne.Gameplay;
 
 public class Game
 {

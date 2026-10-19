@@ -1,8 +1,8 @@
-using Tjugoett.Cards;
-using Tjugoett.Participants;
-using Tjugoett.UI;
+using TwentyOne.Cards;
+using TwentyOne.Participants;
+using TwentyOne.UI;
 
-namespace Tjugoett.Gameplay;
+namespace TwentyOne.Gameplay;
 
 public class Round
 {

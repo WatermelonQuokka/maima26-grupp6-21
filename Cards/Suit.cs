@@ -1,4 +1,4 @@
-namespace Tjugoett.Cards;
+namespace TwentyOne.Cards;
 
 public enum Suit
 {

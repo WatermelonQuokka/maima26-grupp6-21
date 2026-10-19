@@ -1,4 +1,4 @@
-namespace Tjugoett.Storage;
+namespace TwentyOne.Storage;
 
 public class PlayerRecord
 {

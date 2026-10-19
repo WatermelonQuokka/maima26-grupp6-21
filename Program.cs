@@ -1,5 +1,4 @@
-﻿using Tjugoett.Gameplay;
-using Tjugoett.UI;
+﻿using TwentyOne.Gameplay;
 try
 {
     Game game = new Game();
