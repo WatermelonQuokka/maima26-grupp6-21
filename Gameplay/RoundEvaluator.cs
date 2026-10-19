@@ -1,6 +1,7 @@
-using Twentyone.Cards;
+using System.Runtime.CompilerServices;
+using Tjugoett.Gameplay;
 
-namespace Twentyone.Gameplay
+namespace Tjugoett.Gameplay
 {
     public class RoundEvaluator
     {
@@ -13,7 +14,7 @@ namespace Twentyone.Gameplay
         }
 
         // Check if player wins
-        public bool PlayerWins(Hand playerHand, Hand dealerHand)
+        public bool PlayerWins(Cards.Hand playerHand, Cards.Hand dealerHand)
         {
             int playerTotal = playerHand.GetTotalValue();
             int dealerTotal = dealerHand.GetTotalValue();
@@ -35,11 +36,11 @@ namespace Twentyone.Gameplay
             {
                 if (playerTotal == 21 && dealerTotal == 21)
                 {
-                    if (playerHand.IsNatural() && !dealerHand.IsNatural())
+                    if (playerHand.IsNatural && !dealerHand.IsNatural)
                     {
                         return true;
                     }
-                    if (!playerHand.IsNatural() && dealerHand.IsNatural())
+                    if (!playerHand.IsNatural && dealerHand.IsNatural)
                     {
                         return false;
                     }
