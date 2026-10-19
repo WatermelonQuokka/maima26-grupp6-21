@@ -30,6 +30,7 @@ public class Game
             Round round = new(_players, _deck, _dealer);
             round.Play();
             GameStorage.Save(_savedPlayers);
+            ConsoleUi.ShowStatistics(_players);
             // Ask if players want to play another round
             playAgain = ConsoleUi.AskToPlayAgain();
         } while (playAgain);
