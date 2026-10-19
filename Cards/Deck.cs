@@ -8,17 +8,18 @@ public class Deck
     public int Count => _cards.Count;
 
 
-    public Deck()
+    public Deck(int numberOfDecks = 1)
     {
-        Reset();
+        Reset(numberOfDecks);
     }
 
-    private void Reset()
+    private void Reset(int numberOfDecks = 1)
     {
         // clears the remaining deck
         _cards.Clear();
         // looping through enums suits * ranks
         // = total deck (4 * 13) = 52
+        for (int i = 0; i < numberOfDecks; i++)
         foreach(Suit suit in Enum.GetValues<Suit>())
         {
             foreach(Rank rank in Enum.GetValues<Rank>())
