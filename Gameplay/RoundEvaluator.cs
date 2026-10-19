@@ -1,11 +1,10 @@
-using System.Runtime.CompilerServices;
-using Tjugoett.Gameplay;
+using Tjugoett.Cards;
 
 namespace Tjugoett.Gameplay
 {
     public class RoundEvaluator
     {
-        private RuleSet _ruleSet;
+        private static RuleSet _ruleSet = new RuleSet();
 
         // Constructor
         public RoundEvaluator(RuleSet ruleSet)
@@ -13,8 +12,7 @@ namespace Tjugoett.Gameplay
             _ruleSet = ruleSet;
         }
 
-        // Check if player wins
-        public bool PlayerWins(Cards.Hand playerHand, Cards.Hand dealerHand)
+        public static RoundResult Evaluate(Hand playerHand, Hand dealerHand)
         {
             int playerTotal = playerHand.GetTotalValue();
             int dealerTotal = dealerHand.GetTotalValue();
@@ -22,13 +20,13 @@ namespace Tjugoett.Gameplay
             // If player busts, player loses
             if (playerHand.IsBust())
             {
-                return false;
+                return RoundResult.Lose;
             }
 
             // If dealer busts, player wins
             if (dealerHand.IsBust())
             {
-                return true;
+                return RoundResult.Win;
             }
 
             // Rule: Natural 21 beats 3-card 21
@@ -38,11 +36,11 @@ namespace Tjugoett.Gameplay
                 {
                     if (playerHand.IsNatural && !dealerHand.IsNatural)
                     {
-                        return true;
+                        return RoundResult.Win;
                     }
                     if (!playerHand.IsNatural && dealerHand.IsNatural)
                     {
-                        return false;
+                        return RoundResult.Lose;
                     }
                 }
             }
@@ -50,11 +48,11 @@ namespace Tjugoett.Gameplay
             // Higher points win
             if (playerTotal > dealerTotal)
             {
-                return true;
+                return RoundResult.Win;
             }
             else
             {
-                return false;
+                return RoundResult.Lose;
             }
         }
     }
