@@ -12,10 +12,13 @@ public class Game
     private const int MaxPlayers = 5;
     private readonly List<Player> _players = new();
     private readonly List<Player> _savedPlayers;
-    private readonly Deck _deck = new();
+    private readonly RuleSet _rules;
+    private readonly Deck _deck;
     private readonly Dealer _dealer = new();
     public Game()
     {
+        _rules = RuleSet.LoadFromFile("rules.json");
+        _deck = new Deck(_rules.NumberOfDecks);
         _savedPlayers = GameStorage.Load();
     }
 
