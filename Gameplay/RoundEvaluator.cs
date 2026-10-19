@@ -1,47 +1,60 @@
-using Tjugoett.Cards;
-using Tjugoett.Participants;
+using Twentyone.Cards;
 
-namespace Tjugoett.Gameplay;
-
-public static class RoundEvaluator
+namespace Twentyone.Gameplay
 {
-    public static RoundResult Evaluate(Hand playerHand, Hand dealerHand)
+    public class RoundEvaluator
     {
-        if (playerHand.IsNatural && dealerHand.IsNatural)
+        private RuleSet _ruleSet;
+
+        // Constructor
+        public RoundEvaluator(RuleSet ruleSet)
         {
-            return RoundResult.Push;
-        }
-        if (playerHand.IsNatural)
-        {
-            return RoundResult.Blackjack;
-        }
-        if (dealerHand.IsNatural)
-        {
-            return RoundResult.Lose;
+            _ruleSet = ruleSet;
         }
 
-        if (playerHand.IsBust())
+        // Check if player wins
+        public bool PlayerWins(Hand playerHand, Hand dealerHand)
         {
-            return RoundResult.Lose;
-        }
+            int playerTotal = playerHand.GetTotalValue();
+            int dealerTotal = dealerHand.GetTotalValue();
 
-        if (dealerHand.IsBust())
-        {
-            return RoundResult.Win;
-        }
+            // If player busts, player loses
+            if (playerHand.IsBust())
+            {
+                return false;
+            }
 
-        int playerTotal = playerHand.GetTotalValue();
-        int dealerTotal = dealerHand.GetTotalValue();
+            // If dealer busts, player wins
+            if (dealerHand.IsBust())
+            {
+                return true;
+            }
 
-        if (playerTotal > dealerTotal)
-        {
-            return RoundResult.Win;
-        }
-        if (playerTotal < dealerTotal)
-        {
-            return RoundResult.Lose;
-        }
+            // Rule: Natural 21 beats 3-card 21
+            if (_ruleSet.NaturalBlackjackBeatsThreeCard21)
+            {
+                if (playerTotal == 21 && dealerTotal == 21)
+                {
+                    if (playerHand.IsNatural() && !dealerHand.IsNatural())
+                    {
+                        return true;
+                    }
+                    if (!playerHand.IsNatural() && dealerHand.IsNatural())
+                    {
+                        return false;
+                    }
+                }
+            }
 
-        return RoundResult.Push;
+            // Higher points win
+            if (playerTotal > dealerTotal)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
