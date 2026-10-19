@@ -1,5 +1,7 @@
+using Tjugoett.Cards;
 using Tjugoett.Participants;
 using Tjugoett.UI;
+using Tjugoett.Storage;
 
 namespace Tjugoett.Gameplay;
 
@@ -8,15 +10,29 @@ public class Game
     private const int MinPlayers = 1;
     private const int MaxPlayers = 5;
     private readonly List<Player> _players = new();
-
+    private readonly List<Player> _savedPlayers;
+    private readonly Deck _deck = new();
+    private readonly Dealer _dealer = new();
     public Game()
     {
+        _savedPlayers = GameStorage.Load();
     }
 
     public void Run()
     {
+        // Add players only once at the begining
         AddPlayers();
-        PlayRound();
+        bool playAgain;
+        // Main game loop for rounds
+        do
+        {
+            Round round = new(_players, _deck, _dealer);
+            round.Play();
+            GameStorage.Save(_savedPlayers);  
+            // Ask if players want to play another round
+            playAgain = ConsoleUi.AskToPlayAgain();
+        } while (playAgain);
+        Console.WriteLine("\nTack för att du spelade Tjugoett! Hej då!");
     }
 
     // asks user choice for amount of players
@@ -38,7 +54,18 @@ public class Game
                 }
             }
             while (IsNameTaken(name));
-            _players.Add(new Player(name));
+
+            Player? existingPlayer = FindSavedPlayer(name);
+            if (existingPlayer != null)
+            {
+                _players.Add(existingPlayer);
+            }
+            else
+            {
+                Player newPlayer = new Player(name, new HumanMoveDecider());
+                _savedPlayers.Add(newPlayer);
+                _players.Add(newPlayer);
+            }
         }
     }
 
@@ -56,18 +83,15 @@ public class Game
         }
         return false;
     }
-
-    private void PlayRound()
+    private Player? FindSavedPlayer(string name)
     {
-        foreach(Player player in _players)
+        foreach (Player player in _savedPlayers)
         {
-            PlayTurn(player);
+            if (string.Equals(player.Name, name, StringComparison.OrdinalIgnoreCase))
+            {
+                return player;
+            }
         }
-    }
-
-    // Not finished only placeholder - story 13 adds here
-    private void PlayTurn(Player player)
-    {
-        Console.WriteLine($"{player.Name}, det är din tur.");
+        return null;
     }
 }
