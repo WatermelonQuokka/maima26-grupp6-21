@@ -55,7 +55,7 @@ public class Hand
         int total = 0;
         int aceCount = 0;
 
-        foreach (var card in _cards)
+        foreach (Card card in _cards)
         {
             if (card.Rank == Rank.Ace)
             {
