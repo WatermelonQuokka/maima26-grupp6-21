@@ -1,7 +1,7 @@
-using Tjugoett.Cards;
-using Tjugoett.Gameplay;
+using TwentyOne.Cards;
+using TwentyOne.Gameplay;
 
-namespace Tjugoett.Deciders;
+namespace TwentyOne.Deciders;
 
 public class BasicStrategyMoveDecider : IMoveDecider
 {

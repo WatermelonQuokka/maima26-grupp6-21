@@ -1,4 +1,4 @@
-namespace Tjugoett.Gameplay;
+namespace TwentyOne.Gameplay;
 
 public enum RoundResult
 {

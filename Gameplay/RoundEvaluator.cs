@@ -1,6 +1,9 @@
-using Tjugoett.Cards;
+using TwentyOne.Cards;
+using TwentyOne.Participants;
 
-namespace Tjugoett.Gameplay
+namespace TwentyOne.Gameplay;
+
+public static class RoundEvaluator
 {
     public class RoundEvaluator
     {

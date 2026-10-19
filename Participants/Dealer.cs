@@ -1,4 +1,4 @@
-namespace Tjugoett.Participants;
+namespace TwentyOne.Participants;
 
 public class Dealer : Participant
 {

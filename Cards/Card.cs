@@ -1,4 +1,4 @@
-namespace Tjugoett.Cards;
+namespace TwentyOne.Cards;
 
 
 // single play card with no value

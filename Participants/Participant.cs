@@ -1,6 +1,6 @@
-using Tjugoett.Cards;
+using TwentyOne.Cards;
 
-namespace Tjugoett.Participants;
+namespace TwentyOne.Participants;
 
 public abstract class Participant
 {

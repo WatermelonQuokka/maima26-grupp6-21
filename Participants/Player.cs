@@ -1,6 +1,6 @@
-using Tjugoett.Deciders;
+using TwentyOne.Deciders;
 
-namespace Tjugoett.Participants;
+namespace TwentyOne.Participants;
 
 public class Player : Participant
 {

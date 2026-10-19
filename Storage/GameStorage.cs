@@ -1,8 +1,8 @@
 using System.Text.Json;
-using Tjugoett.Participants;
-using Tjugoett.Deciders;
+using TwentyOne.Participants;
+using TwentyOne.Deciders;
 
-namespace Tjugoett.Storage;
+namespace TwentyOne.Storage;
 
 public static class GameStorage
 {

@@ -1,6 +1,6 @@
-using Tjugoett.Cards;
+using TwentyOne.Cards;
 
-namespace Tjugoett.Graphics;
+namespace TwentyOne.Graphics;
 
 public static class CardRenderer
 {
