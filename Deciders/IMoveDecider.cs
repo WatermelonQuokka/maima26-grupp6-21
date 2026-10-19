@@ -1,7 +1,7 @@
-using Tjugoett.Cards;
-using Tjugoett.Gameplay;
+using Twentyone.Cards;
+using Twentyone.Gameplay;
 
-namespace Tjugoett.Deciders;
+namespace Twentyone.Deciders;
 
 public interface IMoveDecider
 {

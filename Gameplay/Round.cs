@@ -1,8 +1,8 @@
-using Tjugoett.Cards;
-using Tjugoett.Participants;
-using Tjugoett.UI;
+using Twentyone.Cards;
+using Twentyone.Participants;
+using Twentyone.UI;
 
-namespace Tjugoett.Gameplay;
+namespace Twentyone.Gameplay;
 
 public class Round
 {
@@ -63,10 +63,10 @@ public class Round
         Card dealerUpCard = _dealer.Hand.GetCards()[0];
         Console.WriteLine($"{_dealer.Name} visar: {dealerUpCard}");
         ConsoleUi.ShowHand(player);
-        // Hoppa över turen om spelaren har en naturlig tjugoett 
+        // Hoppa över turen om spelaren har en naturlig Twentyone 
         if (player.Hand.IsNatural)
         {
-            Console.WriteLine($"{player.Name} har naturlig tjugoett och hoppar över sin tur.");
+            Console.WriteLine($"{player.Name} har naturlig Twentyone och hoppar över sin tur.");
             return; //Avsluta metoden direkt
         }
         Move move;

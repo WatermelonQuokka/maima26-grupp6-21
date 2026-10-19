@@ -1,10 +1,10 @@
-using Tjugoett.Cards;
-using Tjugoett.Participants;
-using Tjugoett.UI;
-using Tjugoett.Storage;
-using Tjugoett.Deciders;
+using Twentyone.Cards;
+using Twentyone.Participants;
+using Twentyone.UI;
+using Twentyone.Storage;
+using Twentyone.Deciders;
 
-namespace Tjugoett.Gameplay;
+namespace Twentyone.Gameplay;
 
 public class Game
 {
@@ -33,7 +33,7 @@ public class Game
             // Ask if players want to play another round
             playAgain = ConsoleUi.AskToPlayAgain();
         } while (playAgain);
-        Console.WriteLine("\nTack för att du spelade Tjugoett! Hej då!");
+        Console.WriteLine("\nTack för att du spelade Twentyone! Hej då!");
     }
 
     // asks user choice for amount of players

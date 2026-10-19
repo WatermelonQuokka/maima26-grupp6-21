@@ -1,4 +1,4 @@
-namespace Tjugoett.Cards;
+namespace Twentyone.Cards;
 
 public class Deck
 {

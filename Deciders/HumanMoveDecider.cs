@@ -1,8 +1,8 @@
-using Tjugoett.Cards;
-using Tjugoett.UI;
-using Tjugoett.Gameplay;
+using Twentyone.Cards;
+using Twentyone.UI;
+using Twentyone.Gameplay;
 
-namespace Tjugoett.Deciders;
+namespace Twentyone.Deciders;
 
 public class HumanMoveDecider : IMoveDecider
 {
