@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Tjugoett.Gameplay
+namespace TwentyOne.Gameplay
 {
     public class RuleSet
     {

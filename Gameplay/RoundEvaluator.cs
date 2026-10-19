@@ -3,8 +3,6 @@ using TwentyOne.Participants;
 
 namespace TwentyOne.Gameplay;
 
-public static class RoundEvaluator
-{
     public class RoundEvaluator
     {
         private static RuleSet _ruleSet = new RuleSet();
@@ -59,4 +57,3 @@ public static class RoundEvaluator
             }
         }
     }
-}
