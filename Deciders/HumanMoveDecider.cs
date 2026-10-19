@@ -1,8 +1,8 @@
-using Twentyone.Cards;
-using Twentyone.UI;
-using Twentyone.Gameplay;
+using TwentyOne.Cards;
+using TwentyOne.UI;
+using TwentyOne.Gameplay;
 
-namespace Twentyone.Deciders;
+namespace TwentyOne.Deciders;
 
 public class HumanMoveDecider : IMoveDecider
 {

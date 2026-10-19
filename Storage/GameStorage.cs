@@ -1,8 +1,8 @@
 using System.Text.Json;
-using Twentyone.Participants;
-using Twentyone.Deciders;
+using TwentyOne.Participants;
+using TwentyOne.Deciders;
 
-namespace Twentyone.Storage;
+namespace TwentyOne.Storage;
 
 public static class GameStorage
 {

@@ -1,4 +1,4 @@
-﻿using Twentyone.Gameplay;
+﻿using TwentyOne.Gameplay;
 try
 {
     Game game = new Game();

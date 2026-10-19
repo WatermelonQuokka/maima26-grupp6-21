@@ -1,4 +1,4 @@
-namespace Twentyone.Storage;
+namespace TwentyOne.Storage;
 
 public class PlayerRecord
 {

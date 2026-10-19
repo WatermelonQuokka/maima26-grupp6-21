@@ -1,4 +1,4 @@
-namespace Twentyone.Cards;
+namespace TwentyOne.Cards;
 
 public class Hand
 {
@@ -58,7 +58,7 @@ public class Hand
             if (card.Rank == Rank.Ace)
             {
                 aceCount++;
-                total += 11; // Startvärde för ess i Twentyone
+                total += 11; // Startvärde för ess i tjugoett
             }
             else if (card.Rank == Rank.Jack || card.Rank == Rank.Queen || card.Rank == Rank.King)
             {
@@ -80,7 +80,7 @@ public class Hand
         return total;
     }
 
-    // Upptäcker naturlig Twentyone (exakt två kort med värdet 21)
+    // Upptäcker naturlig tjugoett (exakt två kort med värdet 21)
     public bool IsNatural => _cards.Count == 2 && GetTotalValue() == 21;
 
     // Kontrollerar om handen har spruckit (värde över 21)

@@ -1,6 +1,6 @@
-using Twentyone.Cards;
+using TwentyOne.Cards;
 
-namespace Twentyone.Participants;
+namespace TwentyOne.Participants;
 
 public abstract class Participant
 {

@@ -1,7 +1,7 @@
-using Twentyone.Cards;
-using Twentyone.Participants;
+using TwentyOne.Cards;
+using TwentyOne.Participants;
 
-namespace Twentyone.Gameplay;
+namespace TwentyOne.Gameplay;
 
 public static class RoundEvaluator
 {

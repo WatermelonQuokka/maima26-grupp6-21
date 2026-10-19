@@ -1,4 +1,4 @@
-namespace Twentyone.Participants;
+namespace TwentyOne.Participants;
 
 public class Dealer : Participant
 {

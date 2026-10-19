@@ -1,6 +1,6 @@
-using Twentyone.Deciders;
+using TwentyOne.Deciders;
 
-namespace Twentyone.Participants;
+namespace TwentyOne.Participants;
 
 public class Player : Participant
 {

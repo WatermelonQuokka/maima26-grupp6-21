@@ -1,7 +1,7 @@
-using Twentyone.Cards;
-using Twentyone.Gameplay;
+using TwentyOne.Cards;
+using TwentyOne.Gameplay;
 
-namespace Twentyone.Deciders;
+namespace TwentyOne.Deciders;
 
 public interface IMoveDecider
 {

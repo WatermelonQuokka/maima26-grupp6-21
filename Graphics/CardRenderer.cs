@@ -1,6 +1,6 @@
-using Twentyone.Cards;
+using TwentyOne.Cards;
 
-namespace Twentyone.Graphics;
+namespace TwentyOne.Graphics;
 
 public static class CardRenderer
 {

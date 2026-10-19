@@ -1,9 +1,9 @@
-using Twentyone.Cards;
-using Twentyone.Gameplay;
-using Twentyone.Graphics;
-using Twentyone.Participants;
+using TwentyOne.Cards;
+using TwentyOne.Gameplay;
+using TwentyOne.Graphics;
+using TwentyOne.Participants;
 
-namespace Twentyone.UI;
+namespace TwentyOne.UI;
 
 public static class ConsoleUi
 {
@@ -142,7 +142,7 @@ public static class ConsoleUi
             RoundResult.Win => $"{player.Name} vinner!",
             RoundResult.Lose => $"{player.Name} förlorar.",
             RoundResult.Push => $"{player.Name}: lika.",
-            RoundResult.Blackjack => $"{player.Name} har naturlig Twentyone och vinner!",
+            RoundResult.Blackjack => $"{player.Name} har naturlig tjugoett och vinner!",
             _ => throw new ArgumentOutOfRangeException(nameof(result), result, null)
         };
 

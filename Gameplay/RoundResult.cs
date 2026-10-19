@@ -1,4 +1,4 @@
-namespace Twentyone.Gameplay;
+namespace TwentyOne.Gameplay;
 
 public enum RoundResult
 {

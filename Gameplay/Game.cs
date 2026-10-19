@@ -1,10 +1,10 @@
-using Twentyone.Cards;
-using Twentyone.Participants;
-using Twentyone.UI;
-using Twentyone.Storage;
-using Twentyone.Deciders;
+using TwentyOne.Cards;
+using TwentyOne.Participants;
+using TwentyOne.UI;
+using TwentyOne.Storage;
+using TwentyOne.Deciders;
 
-namespace Twentyone.Gameplay;
+namespace TwentyOne.Gameplay;
 
 public class Game
 {
@@ -33,7 +33,7 @@ public class Game
             // Ask if players want to play another round
             playAgain = ConsoleUi.AskToPlayAgain();
         } while (playAgain);
-        Console.WriteLine("\nTack för att du spelade Twentyone! Hej då!");
+        Console.WriteLine("\nTack för att du spelade Tjugoett! Hej då!");
     }
 
     // asks user choice for amount of players
