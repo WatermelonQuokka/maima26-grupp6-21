@@ -34,7 +34,7 @@ public class Game
             // Ask if players want to play another round
             playAgain = ConsoleUi.AskToPlayAgain();
         } while (playAgain);
-        Console.WriteLine("\nTack för att du spelade Tjugoett! Hej då!");
+        ConsoleUi.ShowGoodbyeMessage();
     }
 
     // asks user choice for amount of players
@@ -59,7 +59,7 @@ public class Game
                     name = ConsoleUi.ReadNonEmptyText($"Spelare {i + 1}, ange ditt namn: ");
                     if (IsNameTaken(name))
                     {
-                        Console.WriteLine("Det finns redan en spelare med det namnet.");
+                        ConsoleUi.ShowNameTakenError();
                     }
                 }
                 while (IsNameTaken(name));
