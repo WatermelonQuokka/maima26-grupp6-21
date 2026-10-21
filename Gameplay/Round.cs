@@ -32,7 +32,8 @@ public class Round
 
         foreach (Player player in _players)
         {
-            RoundResult result = RoundEvaluator.Evaluate(player.Hand, _dealer.Hand);
+            RoundEvaluator evaluator = new RoundEvaluator(RuleSet.LoadFromFile("Data/rules.txt"));
+            RoundResult result = evaluator.Evaluate(player.Hand, _dealer.Hand);
             RecordResult(player, result);
             ConsoleUi.ShowResult(player, result);
         }
