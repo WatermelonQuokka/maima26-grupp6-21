@@ -77,12 +77,17 @@ public static class ConsoleUi
     }
     public static void ShowStatistics(List<Player> players)
     {
+        int nameWidth = "Namn".Length;
+        foreach (Player player in players)
+        {
+            nameWidth = Math.Max(nameWidth, player.Name.Length);
+        }
         Console.WriteLine("\n--- SPELSTATISTIK ---");
-        Console.WriteLine("Namn\tVinster\tFörluster\tLika");
+        Console.WriteLine("Namn".PadRight(nameWidth +2) + "Vinster".PadRight(9) + "Förluster".PadRight(11) + "Lika");
 
         foreach (Player player in players)
         {
-            Console.WriteLine($"{player.Name}\t{player.Wins}\t{player.Losses}\t{player.Pushes}");
+            Console.WriteLine(player.Name.PadRight(nameWidth + 2) + player.Wins.ToString().PadRight(9) + player.Losses.ToString().PadRight(11) + player.Pushes);
         }
         Console.WriteLine();
     }
