@@ -5,7 +5,7 @@ namespace TwentyOne.Gameplay;
 
     public class RoundEvaluator
     {
-        private static RuleSet _ruleSet = new RuleSet();
+        private RuleSet _ruleSet = new RuleSet();
 
         // Constructor
         public RoundEvaluator(RuleSet ruleSet)
@@ -13,7 +13,7 @@ namespace TwentyOne.Gameplay;
             _ruleSet = ruleSet;
         }
 
-        public static RoundResult Evaluate(Hand playerHand, Hand dealerHand)
+        public RoundResult Evaluate(Hand playerHand, Hand dealerHand)
         {
             int playerTotal = playerHand.GetTotalValue();
             int dealerTotal = dealerHand.GetTotalValue();
@@ -43,6 +43,7 @@ namespace TwentyOne.Gameplay;
                     {
                         return RoundResult.Lose;
                     }
+                        return RoundResult.Push;
                 }
             }
 
@@ -51,9 +52,13 @@ namespace TwentyOne.Gameplay;
             {
                 return RoundResult.Win;
             }
+            else if (playerTotal == dealerTotal)
+            {
+                return RoundResult.Push;
+            }
             else
             {
-                return RoundResult.Lose;
+            return RoundResult.Lose;
             }
         }
     }
