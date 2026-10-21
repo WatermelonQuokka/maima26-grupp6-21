@@ -70,6 +70,7 @@ public class Round
             return; //Avsluta metoden direkt
         }
         Move move;
+        do
         {
             move = player.MoveDecider.DecideMove(player.Hand, dealerUpCard);
             if (move == Move.Hit)
