@@ -17,7 +17,7 @@ public class Game
     private readonly Dealer _dealer = new();
     public Game()
     {
-        _rules = RuleSet.LoadFromFile("rules.json");
+        _rules = RuleSet.LoadFromFile("Data/rules.txt");
         _deck = new Deck(_rules.NumberOfDecks);
         _savedPlayers = GameStorage.Load();
     }
