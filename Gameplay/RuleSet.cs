@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using TwentyOne.UI;
 
 namespace TwentyOne.Gameplay
 {
@@ -57,9 +58,10 @@ namespace TwentyOne.Gameplay
                     }
                 }
             }
-            catch
+            catch (Exception)
             {
                 // If error happens, use default rules
+               
             }
 
             return rules;
