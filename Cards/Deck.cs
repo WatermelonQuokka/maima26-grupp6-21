@@ -4,13 +4,15 @@ public class Deck
 {
     private List<Card> _cards = new();
     private const int CardsBeforeReshuffle = 15;
+    private readonly int _numberOfDecks;
 
     public int Count => _cards.Count;
 
 
     public Deck(int numberOfDecks = 1)
     {
-        Reset(numberOfDecks);
+        _numberOfDecks = numberOfDecks;
+        Reset(_numberOfDecks);
     }
 
     private void Reset(int numberOfDecks = 1)
@@ -59,7 +61,7 @@ public class Deck
     {
         if (Count < CardsBeforeReshuffle)
         {
-            Reset();
+            Reset(_numberOfDecks);
         }
     }
 }
