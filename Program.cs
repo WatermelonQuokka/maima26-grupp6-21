@@ -1,4 +1,5 @@
 ﻿using TwentyOne.Gameplay;
+using TwentyOne.UI;
 try
 {
     Game game = new Game();
@@ -6,5 +7,5 @@ try
 }
 catch (EndOfStreamException)
 {
-    Console.WriteLine("Inmatningen avslutades. Hej då!");
+    ConsoleUi.ShowInputEndedMessage();
 }

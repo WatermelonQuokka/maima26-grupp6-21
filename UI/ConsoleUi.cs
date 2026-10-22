@@ -77,12 +77,17 @@ public static class ConsoleUi
     }
     public static void ShowStatistics(List<Player> players)
     {
+        int nameWidth = "Namn".Length;
+        foreach (Player player in players)
+        {
+            nameWidth = Math.Max(nameWidth, player.Name.Length);
+        }
         Console.WriteLine("\n--- SPELSTATISTIK ---");
-        Console.WriteLine("Namn\tVinster\tFörluster\tLika");
+        Console.WriteLine("Namn".PadRight(nameWidth +2) + "Vinster".PadRight(9) + "Förluster".PadRight(11) + "Lika");
 
         foreach (Player player in players)
         {
-            Console.WriteLine($"{player.Name}\t{player.Wins}\t{player.Losses}\t{player.Pushes}");
+            Console.WriteLine(player.Name.PadRight(nameWidth + 2) + player.Wins.ToString().PadRight(9) + player.Losses.ToString().PadRight(11) + player.Pushes);
         }
         Console.WriteLine();
     }
@@ -148,4 +153,46 @@ public static class ConsoleUi
 
         Console.WriteLine(message);
     }
+    public static void ShowGoodbyeMessage()
+    {
+        Console.WriteLine("\nTack för att du spelade Tjugoett! Hej då!");
+    }
+
+    public static void ShowNameTakenError()
+    {
+        Console.WriteLine("Det finns redan en spelare med det namnet.");
+    }
+    public static void ShowPlayerTurn(string playerName)
+    {
+        Console.WriteLine($"{playerName}, det är din tur.");
+    }
+
+    public static void ShowDealerUpCard(string dealerName, Card card)
+    {
+        Console.WriteLine($"{dealerName} visar: {card}");
+    }
+
+    public static void ShowNaturalTwentyOneMessage(string playerName)
+    {
+        Console.WriteLine($"{playerName} har naturlig tjugoett och hoppar över sin tur.");
+    }
+
+    public static void ShowBustMessage()
+    {
+        Console.WriteLine("Spräckt!");
+    }
+    public static void ShowInputEndedMessage()
+    {
+        Console.WriteLine("Inmatningen avslutades. Hej då!");
+    }
+    public static void ShowStorageWarning()
+    {
+        Console.WriteLine("Varning: Kunde inte tolka sparfilen. Startar med tom spelarlista.");
+    }
+    public static void WriteLine()
+    {
+        Console.WriteLine();
+    }
+
+
 }

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using TwentyOne.Participants;
 using TwentyOne.Deciders;
+using TwentyOne.UI;
 
 namespace TwentyOne.Storage;
 
@@ -55,7 +56,7 @@ public static class GameStorage
         }
         catch (JsonException)
         {
-            Console.WriteLine($"Varning: Kunde inte tolka sparfilen. Startar med tom spelarlista.");
+            ConsoleUi.ShowStorageWarning();
             return new List<Player>();
         }
     }
