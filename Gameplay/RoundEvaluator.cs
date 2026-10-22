@@ -37,7 +37,7 @@ namespace TwentyOne.Gameplay;
                 {
                     if (playerHand.IsNatural && !dealerHand.IsNatural)
                     {
-                        return RoundResult.Win;
+                        return RoundResult.Blackjack;
                     }
                     if (!playerHand.IsNatural && dealerHand.IsNatural)
                     {

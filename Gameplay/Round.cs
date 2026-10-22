@@ -30,13 +30,14 @@ public class Round
 
         Console.WriteLine();
 
+        RoundEvaluator evaluator = new RoundEvaluator(RuleSet.LoadFromFile("rules.txt"));
+
         foreach (Player player in _players)
-        {
-            RoundEvaluator evaluator = new RoundEvaluator(RuleSet.LoadFromFile("Data/rules.txt"));
-            RoundResult result = evaluator.Evaluate(player.Hand, _dealer.Hand);
-            RecordResult(player, result);
-            ConsoleUi.ShowResult(player, result);
-        }
+    {
+        RoundResult result = evaluator.Evaluate(player.Hand, _dealer.Hand);
+        RecordResult(player, result);
+        ConsoleUi.ShowResult(player, result);
+    }
     }
 
     private static void RecordResult(Player player, RoundResult result)

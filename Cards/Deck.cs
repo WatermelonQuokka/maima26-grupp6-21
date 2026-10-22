@@ -3,15 +3,16 @@ namespace TwentyOne.Cards;
 public class Deck
 {
     private List<Card> _cards = new();
-    private const int CardsBeforeReshuffle = 15;
+    private readonly int _reshuffleThreshold;
     private readonly int _numberOfDecks;
 
     public int Count => _cards.Count;
 
 
-    public Deck(int numberOfDecks = 1)
+    public Deck(int numberOfDecks = 1, int reshuffleThreshold = 15)
     {
         _numberOfDecks = numberOfDecks;
+        _reshuffleThreshold = reshuffleThreshold;
         Reset(_numberOfDecks);
     }
 
@@ -59,7 +60,7 @@ public class Deck
     // reshuffles if the card count is less than the constant
     public void ReshuffleIfLow()
     {
-        if (Count < CardsBeforeReshuffle)
+        if (Count < _reshuffleThreshold)
         {
             Reset(_numberOfDecks);
         }
