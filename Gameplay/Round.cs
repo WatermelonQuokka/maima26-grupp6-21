@@ -28,7 +28,7 @@ public class Round
         }
         PlayDealerTurn();
 
-        Console.WriteLine();
+        ConsoleUi.WriteLine();
 
         foreach (Player player in _players)
         {
@@ -59,14 +59,14 @@ public class Round
     // deals a card on hit, repeats until player stand or bust
     private void PlayTurn(Player player)
     {
-        Console.WriteLine($"{player.Name}, det är din tur.");
+        ConsoleUi.ShowPlayerTurn(player.Name);
         Card dealerUpCard = _dealer.Hand.GetCards()[0];
-        Console.WriteLine($"{_dealer.Name} visar: {dealerUpCard}");
+        ConsoleUi.ShowDealerUpCard(_dealer.Name, dealerUpCard);
         ConsoleUi.ShowHand(player);
         // Hoppa över turen om spelaren har en naturlig tjugoett 
         if (player.Hand.IsNatural)
         {
-            Console.WriteLine($"{player.Name} har naturlig tjugoett och hoppar över sin tur.");
+            ConsoleUi.ShowNaturalTwentyOneMessage(player.Name);
             return; //Avsluta metoden direkt
         }
         Move move;
@@ -85,7 +85,7 @@ public class Round
         // Skriv ut "Spräckt!" om spelaren har spräckt
         if (player.Hand.IsBust())
         {
-            Console.WriteLine("Spräckt!");
+            ConsoleUi.ShowBustMessage();
         }
     }
     
