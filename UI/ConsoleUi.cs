@@ -193,6 +193,8 @@ public static class ConsoleUi
     {
         Console.WriteLine();
     }
-
-
+    public static void ShowMessage(string message)
+    {
+        Console.WriteLine(message);
+    }
 }

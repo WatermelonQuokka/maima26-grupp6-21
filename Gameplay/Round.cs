@@ -8,14 +8,16 @@ public class Round
 {
     private readonly List<Player> _players;
     private readonly Deck _deck;
+    private readonly RuleSet _rules;
     private readonly Dealer _dealer;
     private const int OpeningCardCount = 2;
 
-    public Round(List<Player> players, Deck deck, Dealer dealer)
+    public Round(List<Player> players, Deck deck, Dealer dealer, RuleSet rules)
     {
         _players = players;
         _deck = deck;
         _dealer = dealer;
+        _rules = rules;
     }
 
     public void Play()
@@ -30,7 +32,7 @@ public class Round
 
         ConsoleUi.WriteLine();
 
-        RoundEvaluator evaluator = new RoundEvaluator(RuleSet.LoadFromFile("rules.txt"));
+        RoundEvaluator evaluator = new RoundEvaluator(_rules);
 
         foreach (Player player in _players)
     {

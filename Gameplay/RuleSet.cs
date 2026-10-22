@@ -20,7 +20,7 @@ namespace TwentyOne.Gameplay
             // Check if file exists, if not return default rules
             if (!File.Exists(filePath))
             {
-                Console.WriteLine("Hittade inte rules.txt. Använder standardreglar.");
+                ConsoleUi.ShowMessage("Hittade inte rules.txt. Använder standardreglar.");
                 return rules;
             }
 
@@ -62,11 +62,11 @@ namespace TwentyOne.Gameplay
             catch (FormatException ex)
             {
                 // If error happens, notify user and use default rules
-                Console.WriteLine($"Fel format i reglar-filen: {ex.Message}");   
+                ConsoleUi.ShowMessage($"Fel format i reglar-filen: {ex.Message}");   
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Kunde inte läsa regler-filen: {ex.Message}");
+                ConsoleUi.ShowMessage($"Kunde inte läsa regler-filen: {ex.Message}");
             }
 
             return rules;
