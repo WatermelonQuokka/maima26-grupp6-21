@@ -52,13 +52,13 @@ public class RoundEvaluator
         {
             return RoundResult.Win;
         }
-        else if (playerTotal == dealerTotal)
+        else if (playerTotal < dealerTotal)
         {
-            return RoundResult.Push;
+            return RoundResult.Lose; // Player loses if their total is lower than the dealer's
         }
         else
         {
-            return RoundResult.Lose;
+            return RoundResult.Push; // Push only when both totalsare exactly equal
         }
     }
 }
