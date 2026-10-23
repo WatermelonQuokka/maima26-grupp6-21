@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using TwentyOne.UI;
 
 namespace TwentyOne.Gameplay
@@ -33,7 +31,7 @@ namespace TwentyOne.Gameplay
                 {
                     // Split line into key and value by =
                     string[] parts = line.Split('=');
-                    
+
                     if (parts.Length == 2)
                     {
                         string key = parts[0].Trim();
@@ -62,7 +60,7 @@ namespace TwentyOne.Gameplay
             catch (FormatException ex)
             {
                 // If error happens, notify user and use default rules
-                ConsoleUi.ShowRulesFormatError(ex.Message);   
+                ConsoleUi.ShowRulesFormatError(ex.Message);
             }
             catch (Exception ex)
             {
@@ -71,26 +69,7 @@ namespace TwentyOne.Gameplay
 
             return rules;
         }
-         public static string LoadRules()
-        {
-        string folderPath = "Data";
-        string filePath = Path.Combine(folderPath, "rules.txt");
 
-        if (!Directory.Exists(folderPath))
-        {
-            Directory.CreateDirectory(folderPath);
-        }
-
-        if (!File.Exists(filePath))
-        {
-            string defaultRules = "Natural 21 beats 3-card 21";
-            File.WriteAllText(filePath, defaultRules);
-            ConsoleUi.ShowRulesFileNotFound();
-        }
-
-        return File.ReadAllText(filePath);
-        }
-        
     }
 }
 

@@ -17,8 +17,8 @@ public class Game
     private readonly Dealer _dealer;
     public Game()
     {
-        _rules = RuleSet.LoadFromFile("Data/rules.txt");
-        _deck = new Deck(_rules.NumberOfDecks, _rules. ReshuffleThreshold);
+        _rules = RuleSet.LoadFromFile("rules.txt");
+        _deck = new Deck(_rules.NumberOfDecks, _rules.ReshuffleThreshold);
         _dealer = new Dealer(_rules);
         _savedPlayers = GameStorage.Load();
     }

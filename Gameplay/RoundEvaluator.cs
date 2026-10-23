@@ -23,8 +23,29 @@ public class RoundEvaluator
         {
             return RoundResult.Lose;
         }
+        // 2.Check house rule for natural 21 beats 3-card 21
+        if (_ruleSet.NaturalBlackjackBeatsThreeCard21)
+        {
+            if (playerHand.IsNatural && dealerTotal == 21 && dealerHand.GetCards().Count >= 3)
+            {
+                return RoundResult.Blackjack;
+            }
+            if (dealerHand.IsNatural && playerTotal == 21 && playerHand.GetCards().Count >= 3)
+            {
+                return RoundResult.Lose;
+            }
+        }
+        else
+        {
+            bool playerNaturalVsDealer3Card = playerHand.IsNatural && dealerTotal == 21 && dealerHand.GetCards().Count >= 3;
+            bool dealerNaturalVsPlayer3Card = dealerHand.IsNatural && playerTotal == 21 && playerHand.GetCards().Count >= 3;
 
-         // 2. Check Natural 21 scenarios (Natural beats multi-card 21)
+            if (playerNaturalVsDealer3Card || dealerNaturalVsPlayer3Card)
+            {
+                return RoundResult.Push;
+            }
+        }
+        // 3. Check Natural 21 scenarios (Natural beats multi-card 21)
         if (playerHand.IsNatural && dealerHand.IsNatural)
         {
             return RoundResult.Push; // Both have Natural 21
@@ -40,25 +61,13 @@ public class RoundEvaluator
             return RoundResult.Lose; // Dealer Natural beats player multi-card 21
         }
 
-        // 3. Check if dealer busts
+        // 4. Check if dealer busts
         if (dealerHand.IsBust())
         {
             return RoundResult.Win;
         }
 
-        // Rule: Natural 21 beats 3-card 21
-        if (_ruleSet.NaturalBlackjackBeatsThreeCard21)
-        {
-        if (playerHand.IsNatural && dealerTotal == 21 && dealerHand.GetCards().Count > 2)
-        {
-            return RoundResult.Blackjack;
-        }
-        if (dealerHand.IsNatural && playerTotal == 21 && playerHand.GetCards().Count > 2)
-        {
-            return RoundResult.Lose;
-        }
-        }
-        // Higher points win
+        // 5.Higher points win
         if (playerTotal > dealerTotal)
         {
             return RoundResult.Win;
