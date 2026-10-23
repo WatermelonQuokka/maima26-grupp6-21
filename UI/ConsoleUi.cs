@@ -197,4 +197,19 @@ public static class ConsoleUi
     {
         Console.WriteLine(message);
     }
+    public static void ShowRulesFileNotFound()
+    {
+        Console.WriteLine("Hittade inte rules.txt. Använder regler.");
+    }
+
+    public static void ShowRulesFormatError(string message)
+    {
+        Console.WriteLine($"Fel format i regler: {message}");
+    }
+
+    public static void ShowRulesReadError(string message)
+    {
+        Console.WriteLine($"Kunde inte läsa regler: {message}");
+    }
+
 }

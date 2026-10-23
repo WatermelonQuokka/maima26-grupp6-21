@@ -18,13 +18,29 @@ public class RoundEvaluator
         int playerTotal = playerHand.GetTotalValue();
         int dealerTotal = dealerHand.GetTotalValue();
 
-        // If player busts, player loses
+        // 1. If player busts, player loses
         if (playerHand.IsBust())
         {
             return RoundResult.Lose;
         }
 
-        // If dealer busts, player wins
+         // 2. Check Natural 21 scenarios (Natural beats multi-card 21)
+        if (playerHand.IsNatural && dealerHand.IsNatural)
+        {
+            return RoundResult.Push; // Both have Natural 21
+        }
+
+        if (playerHand.IsNatural)
+        {
+            return RoundResult.Blackjack; // Player Natural beats everything (including dealer 3-card 21)
+        }
+
+        if (dealerHand.IsNatural)
+        {
+            return RoundResult.Lose; // Dealer Natural beats player multi-card 21
+        }
+
+        // 3. Check if dealer busts
         if (dealerHand.IsBust())
         {
             return RoundResult.Win;
@@ -45,7 +61,6 @@ public class RoundEvaluator
         {
             return RoundResult.Lose;
         }
-
 
         // Higher points win
         if (playerTotal > dealerTotal)

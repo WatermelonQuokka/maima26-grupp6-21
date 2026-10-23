@@ -4,7 +4,7 @@ namespace TwentyOne.Participants;
 public class Dealer : Participant
 {
     private readonly RuleSet _ruleSet;
-    
+    private const int DealerStandsAt = 17 ;
     public Dealer(RuleSet? ruleSet = null) : base("Givaren")
     {
         _ruleSet = ruleSet ?? new RuleSet();
@@ -25,10 +25,14 @@ public class Dealer : Participant
     public bool ShouldHit()
     {
         int score = Hand.GetTotalValue();
-        if (score < 17)
-        return true;
-        if (score == 17 && Hand.IsSoft() && _ruleSet.DealerHitsOnSoft17)
-        return true;
+        if (score < DealerStandsAt)
+        {
+            return true;
+        }
+        if (score == DealerStandsAt && Hand.IsSoft() && _ruleSet.DealerHitsOnSoft17)
+        {
+            return true;
+        }
         return false;
     }
 }
