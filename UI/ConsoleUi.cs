@@ -75,6 +75,12 @@ public static class ConsoleUi
             Console.WriteLine($"Ogiltig inmatning. Välj mellan: {string.Join(", ", validOptions)}");
         }
     }
+
+    public static int AskPlayerCount(int minPlayers, int maxPlayers)
+    {
+        return ReadInt($"Välj antal spelare ({minPlayers}-{maxPlayers}): ", minPlayers, maxPlayers);
+    }
+
     public static void ShowStatistics(List<Player> players)
     {
         int nameWidth = "Namn".Length;
@@ -83,7 +89,7 @@ public static class ConsoleUi
             nameWidth = Math.Max(nameWidth, player.Name.Length);
         }
         Console.WriteLine("\n--- SPELSTATISTIK ---");
-        Console.WriteLine("Namn".PadRight(nameWidth +2) + "Vinster".PadRight(9) + "Förluster".PadRight(11) + "Lika");
+        Console.WriteLine("Namn".PadRight(nameWidth + 2) + "Vinster".PadRight(9) + "Förluster".PadRight(11) + "Lika");
 
         foreach (Player player in players)
         {

@@ -45,7 +45,7 @@ public class Game
     private void AddPlayers()
     {
         int computerCount = 0;
-        int playerCount = ConsoleUi.ReadInt($"Välj antal spelare ({MinPlayers}-{MaxPlayers}): ", MinPlayers, MaxPlayers);
+        int playerCount = ConsoleUi.AskPlayerCount(MinPlayers, MaxPlayers);
 
         for (int i = 0; i < playerCount; i++)
         {
