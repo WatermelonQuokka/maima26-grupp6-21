@@ -60,23 +60,5 @@ public static class GameStorage
             return new List<Player>();
         }
     }      
-    public static string LoadRules()
-    {
-        string folderPath = "Data";
-        string filePath = Path.Combine(folderPath, "rules.txt");
-
-        if (!Directory.Exists(folderPath))
-        {
-            Directory.CreateDirectory(folderPath);
-        }
-
-        if (!File.Exists(filePath))
-        {
-            string defaultRules = "Natural 21 beats 3-card 21";
-            File.WriteAllText(filePath, defaultRules);
-        }
-
-        return File.ReadAllText(filePath);
-        }
 
 }

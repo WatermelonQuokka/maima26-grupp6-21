@@ -47,21 +47,17 @@ public class RoundEvaluator
         }
 
         // Rule: Natural 21 beats 3-card 21
-        if (playerHand.IsNatural && dealerHand.IsNatural)
+        if (_ruleSet.NaturalBlackjackBeatsThreeCard21)
         {
-            return RoundResult.Push;
-        }
-
-        if (playerHand.IsNatural)
+        if (playerHand.IsNatural && dealerTotal == 21 && dealerHand.GetCards().Count > 2)
         {
             return RoundResult.Blackjack;
         }
-
-        if (dealerHand.IsNatural)
+        if (dealerHand.IsNatural && playerTotal == 21 && playerHand.GetCards().Count > 2)
         {
             return RoundResult.Lose;
         }
-
+        }
         // Higher points win
         if (playerTotal > dealerTotal)
         {
