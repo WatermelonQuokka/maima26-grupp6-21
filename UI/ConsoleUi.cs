@@ -105,6 +105,18 @@ public static class ConsoleUi
         };
     }
 
+    public static Move AskPlayerMove()
+    {
+        string answer = ReadChoice("Köpa eller stanna? (k/s): ", ["k", "köpa", "s", "stanna"]);
+
+        return answer switch
+        {
+            "k" or "köpa" => Move.Hit,
+            "s" or "stanna" => Move.Stand,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+
     public static void ShowStatistics(List<Player> players)
     {
         int nameWidth = "Namn".Length;
