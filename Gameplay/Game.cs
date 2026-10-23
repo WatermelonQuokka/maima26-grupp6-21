@@ -49,9 +49,9 @@ public class Game
 
         for (int i = 0; i < playerCount; i++)
         {
-            string choice = ConsoleUi.ReadChoice($"Spelare {i + 1}: människa eller dator? (m/d) ", new List<string> { "m", "människa", "d", "dator" });
+            bool isHuman = ConsoleUi.AskIfHuman(i + 1);
 
-            if (choice == "m" || choice == "människa")
+            if (isHuman)
             {
                 string name;
                 do

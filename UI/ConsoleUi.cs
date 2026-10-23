@@ -81,6 +81,12 @@ public static class ConsoleUi
         return ReadInt($"Välj antal spelare ({minPlayers}-{maxPlayers}): ", minPlayers, maxPlayers);
     }
 
+    public static bool AskIfHuman(int seatNumber)
+    {
+        string choice = ReadChoice($"Spelare {seatNumber}: människa eller dator? (m/d) ", ["m", "människa", "d", "dator"]);
+        return choice == "m" || choice == "människa";
+    }
+
     public static void ShowStatistics(List<Player> players)
     {
         int nameWidth = "Namn".Length;
