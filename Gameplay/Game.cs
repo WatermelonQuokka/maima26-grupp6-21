@@ -56,7 +56,7 @@ public class Game
                 string name;
                 do
                 {
-                    name = ConsoleUi.ReadNonEmptyText($"Spelare {i + 1}, ange ditt namn: ");
+                    name = ConsoleUi.AskPlayerName(i + 1);
                     if (IsNameTaken(name))
                     {
                         ConsoleUi.ShowNameTakenError();

@@ -87,6 +87,11 @@ public static class ConsoleUi
         return choice == "m" || choice == "människa";
     }
 
+    public static string AskPlayerName(int seatNumber)
+    {
+        return ReadNonEmptyText($"Spelare {seatNumber}, ange ditt namn: ");
+    }
+
     public static void ShowStatistics(List<Player> players)
     {
         int nameWidth = "Namn".Length;
