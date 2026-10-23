@@ -78,7 +78,6 @@ public class Game
             }
             else
             {
-                IMoveDecider moveDecider;
                 string name;
                 do
                 {
@@ -86,15 +85,13 @@ public class Game
                     name = $"Dator {computerCount}";
                 }
                 while (IsNameTaken(name));
-                string strategyChoice = ConsoleUi.ReadChoice($"{name}: Vilken strategi vill du välja? Simpel eller Grund (s/g): ", new List<string> { "s", "simpel", "g", "grund" });
-                if (strategyChoice == "s" || strategyChoice == "simpel")
+                ComputerStrategy computerStrategy = ConsoleUi.AskComputerStrategy(name);
+                IMoveDecider moveDecider = computerStrategy switch
                 {
-                    moveDecider = new SimpleMoveDecider();
-                }
-                else
-                {
-                    moveDecider = new BasicStrategyMoveDecider();
-                }
+                    ComputerStrategy.Simple => new SimpleMoveDecider(),
+                    ComputerStrategy.Basic => new BasicStrategyMoveDecider(),
+                    _ => throw new ArgumentOutOfRangeException()
+                };
                 _players.Add(new Player(name, moveDecider));
             }
         }

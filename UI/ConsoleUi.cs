@@ -1,4 +1,5 @@
 using TwentyOne.Cards;
+using TwentyOne.Deciders;
 using TwentyOne.Gameplay;
 using TwentyOne.Graphics;
 using TwentyOne.Participants;
@@ -90,6 +91,18 @@ public static class ConsoleUi
     public static string AskPlayerName(int seatNumber)
     {
         return ReadNonEmptyText($"Spelare {seatNumber}, ange ditt namn: ");
+    }
+
+    public static ComputerStrategy AskComputerStrategy(string name)
+    {
+        string strategyChoice = ReadChoice($"{name}: Vilken strategi vill du välja? Simpel eller Grund (s/g): ", ["s", "simpel", "g", "grund"]);
+
+        return strategyChoice switch
+        {
+            "s" or "simpel" => ComputerStrategy.Simple,
+            "g" or "grund" => ComputerStrategy.Basic,
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 
     public static void ShowStatistics(List<Player> players)
