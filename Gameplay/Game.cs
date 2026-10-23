@@ -45,18 +45,18 @@ public class Game
     private void AddPlayers()
     {
         int computerCount = 0;
-        int playerCount = ConsoleUi.ReadInt($"Välj antal spelare ({MinPlayers}-{MaxPlayers}): ", MinPlayers, MaxPlayers);
+        int playerCount = ConsoleUi.AskPlayerCount(MinPlayers, MaxPlayers);
 
         for (int i = 0; i < playerCount; i++)
         {
-            string choice = ConsoleUi.ReadChoice($"Spelare {i + 1}: människa eller dator? (m/d) ", new List<string> { "m", "människa", "d", "dator" });
+            bool isHuman = ConsoleUi.AskIfHuman(i + 1);
 
-            if (choice == "m" || choice == "människa")
+            if (isHuman)
             {
                 string name;
                 do
                 {
-                    name = ConsoleUi.ReadNonEmptyText($"Spelare {i + 1}, ange ditt namn: ");
+                    name = ConsoleUi.AskPlayerName(i + 1);
                     if (IsNameTaken(name))
                     {
                         ConsoleUi.ShowNameTakenError();
@@ -78,7 +78,6 @@ public class Game
             }
             else
             {
-                IMoveDecider moveDecider;
                 string name;
                 do
                 {
@@ -86,15 +85,13 @@ public class Game
                     name = $"Dator {computerCount}";
                 }
                 while (IsNameTaken(name));
-                string strategyChoice = ConsoleUi.ReadChoice($"{name}: Vilken strategi vill du välja? Simpel eller Grund (s/g): ", new List<string> { "s", "simpel", "g", "grund" });
-                if (strategyChoice == "s" || strategyChoice == "simpel")
+                ComputerStrategy computerStrategy = ConsoleUi.AskComputerStrategy(name);
+                IMoveDecider moveDecider = computerStrategy switch
                 {
-                    moveDecider = new SimpleMoveDecider();
-                }
-                else
-                {
-                    moveDecider = new BasicStrategyMoveDecider();
-                }
+                    ComputerStrategy.Simple => new SimpleMoveDecider(),
+                    ComputerStrategy.Basic => new BasicStrategyMoveDecider(),
+                    _ => throw new ArgumentOutOfRangeException()
+                };
                 _players.Add(new Player(name, moveDecider));
             }
         }

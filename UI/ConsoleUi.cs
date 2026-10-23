@@ -1,4 +1,5 @@
 using TwentyOne.Cards;
+using TwentyOne.Deciders;
 using TwentyOne.Gameplay;
 using TwentyOne.Graphics;
 using TwentyOne.Participants;
@@ -75,6 +76,47 @@ public static class ConsoleUi
             Console.WriteLine($"Ogiltig inmatning. Välj mellan: {string.Join(", ", validOptions)}");
         }
     }
+
+    public static int AskPlayerCount(int minPlayers, int maxPlayers)
+    {
+        return ReadInt($"Välj antal spelare ({minPlayers}-{maxPlayers}): ", minPlayers, maxPlayers);
+    }
+
+    public static bool AskIfHuman(int seatNumber)
+    {
+        string choice = ReadChoice($"Spelare {seatNumber}: människa eller dator? (m/d) ", ["m", "människa", "d", "dator"]);
+        return choice == "m" || choice == "människa";
+    }
+
+    public static string AskPlayerName(int seatNumber)
+    {
+        return ReadNonEmptyText($"Spelare {seatNumber}, ange ditt namn: ");
+    }
+
+    public static ComputerStrategy AskComputerStrategy(string name)
+    {
+        string strategyChoice = ReadChoice($"{name}: Vilken strategi vill du välja? Simpel eller Grund (s/g): ", ["s", "simpel", "g", "grund"]);
+
+        return strategyChoice switch
+        {
+            "s" or "simpel" => ComputerStrategy.Simple,
+            "g" or "grund" => ComputerStrategy.Basic,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+
+    public static Move AskPlayerMove()
+    {
+        string answer = ReadChoice("Köpa eller stanna? (k/s): ", ["k", "köpa", "s", "stanna"]);
+
+        return answer switch
+        {
+            "k" or "köpa" => Move.Hit,
+            "s" or "stanna" => Move.Stand,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+
     public static void ShowStatistics(List<Player> players)
     {
         int nameWidth = "Namn".Length;
@@ -83,7 +125,7 @@ public static class ConsoleUi
             nameWidth = Math.Max(nameWidth, player.Name.Length);
         }
         Console.WriteLine("\n--- SPELSTATISTIK ---");
-        Console.WriteLine("Namn".PadRight(nameWidth +2) + "Vinster".PadRight(9) + "Förluster".PadRight(11) + "Lika");
+        Console.WriteLine("Namn".PadRight(nameWidth + 2) + "Vinster".PadRight(9) + "Förluster".PadRight(11) + "Lika");
 
         foreach (Player player in players)
         {
