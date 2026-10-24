@@ -90,7 +90,7 @@ public class Game
                 {
                     ComputerStrategy.Simple => new SimpleMoveDecider(),
                     ComputerStrategy.Basic => new BasicStrategyMoveDecider(),
-                    _ => throw new ArgumentOutOfRangeException()
+                    _ => throw new ArgumentOutOfRangeException(nameof(computerStrategy), computerStrategy, null)
                 };
                 _players.Add(new Player(name, moveDecider));
             }
