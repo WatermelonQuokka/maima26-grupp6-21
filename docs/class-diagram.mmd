@@ -1,0 +1,234 @@
+classDiagram
+    direction LR
+
+    namespace Gameplay {
+        class Game {
+            -int MinPlayers$
+            -int MaxPlayers$
+            -List~Player~ _players
+            -List~Player~ _savedPlayers
+            -Deck _deck
+            -Dealer _dealer
+            +Run() void
+            -AddPlayers() void
+            -IsNameTaken(string name) bool
+            -FindSavedPlayer(string name) Player
+        }
+        class Round {
+            -List~Player~ _players
+            -Deck _deck
+            -Dealer _dealer
+            -int OpeningCardCount$
+            +Round(List~Player~ players, Deck deck, Dealer dealer)
+            +Play() void
+            -RecordResult(Player player, RoundResult result)$ void
+            -PlayTurn(Player player) void
+            -DealOpeningCards() void
+            -ShowDealerHand() void
+            -PlayDealerTurn() void
+        }
+        class RoundEvaluator {
+            <<static>>
+            +Evaluate(Hand playerHand, Hand dealerHand)$ RoundResult
+        }
+        class RoundResult {
+            <<enumeration>>
+            Win
+            Lose
+            Push
+            Blackjack
+        }
+        class Move {
+            <<enumeration>>
+            Hit
+            Stand
+        }
+    }
+
+    namespace Participants {
+        class Participant {
+            <<abstract>>
+            +string Name
+            +Hand Hand
+            #Participant(string name)
+        }
+        class Player {
+            +int Wins
+            +int Losses
+            +int Pushes
+            +IMoveDecider MoveDecider
+            +Player(string name, IMoveDecider moveDecider)
+            +AddWin() void
+            +AddLoss() void
+            +AddPush() void
+            ~RestoreStats(int wins, int losses, int pushes) void
+        }
+        class Dealer {
+            -int DealerStandsAt$
+            +bool IsHoleCardRevealed
+            +Dealer()
+            +RevealHoleCard() void
+            +HideHoleCard() void
+            +ShouldHit() bool
+        }
+    }
+
+    namespace Cards {
+        class Card {
+            +Suit Suit
+            +Rank Rank
+            +Card(Suit suit, Rank rank)
+            +ToString() string
+            -SuitName() string
+            -RankName() string
+        }
+        class Deck {
+            -List~Card~ _cards
+            -int CardsBeforeReshuffle$
+            +int Count
+            +Deck()
+            +Draw() Card
+            +ReshuffleIfLow() void
+            -Reset() void
+            -Shuffle() void
+        }
+        class Hand {
+            -List~Card~ _cards
+            +bool IsNatural
+            +AddCard(Card card) void
+            +Clear() void
+            +GetCards() IReadOnlyList~Card~
+            +GetTotalValue() int
+            +IsSoft() bool
+            +IsBust() bool
+        }
+        class Rank {
+            <<enumeration>>
+            Two
+            Three
+            Four
+            Five
+            Six
+            Seven
+            Eight
+            Nine
+            Ten
+            Jack
+            Queen
+            King
+            Ace
+        }
+        class Suit {
+            <<enumeration>>
+            Hearts
+            Diamonds
+            Clubs
+            Spades
+        }
+    }
+
+    namespace Deciders {
+        class IMoveDecider {
+            <<interface>>
+            +DecideMove(Hand playerHand, Card dealerUpCard) Move
+        }
+        class HumanMoveDecider {
+            +DecideMove(Hand playerHand, Card dealerUpCard) Move
+        }
+        class SimpleMoveDecider {
+            -int ComputerStandsAt$
+            +DecideMove(Hand playerHand, Card dealerUpCard) Move
+        }
+        class BasicStrategyMoveDecider {
+            -Move H$
+            -Move S$
+            -Move[][] HardTable$
+            -Move[][] SoftTable$
+            +DecideMove(Hand playerHand, Card dealerUpCard) Move
+            -DealerColumn(Card dealerUpCard)$ int
+            -HardRow(int total)$ int
+            -SoftRow(int total)$ int
+        }
+    }
+
+    namespace UI {
+        class ConsoleUi {
+            <<static>>
+            +AskToPlayAgain()$ bool
+            +ReadInt(string prompt, int min, int max)$ int
+            +ReadNonEmptyText(string prompt)$ string
+            +ReadChoice(string prompt, List~string~ validOptions)$ string
+            +ShowStatistics(List~Player~ players)$ void
+            +ShowCards(IEnumerable~Card~ cards, bool hideSecondCard)$ void
+            +ShowHand(Participant participant, bool hideSecondCard)$ void
+            +ShowResult(Player player, RoundResult result)$ void
+            -IsRed(Card card)$ bool
+        }
+    }
+
+    namespace Graphics {
+        class CardRenderer {
+            <<static>>
+            -int InnerWidth$
+            +RenderCard(Card card, bool faceUp)$ string[]
+            -HorizontalBorder()$ string
+            -RenderBack(string horizontalLine)$ string[]
+            -RankText(Rank rank)$ string
+            -SuitSymbol(Suit suit)$ string
+        }
+    }
+
+    namespace Storage {
+        class GameStorage {
+            <<static>>
+            -string FolderPath$
+            -string FileName$
+            -string FilePath$
+            +Save(List~Player~ players)$ void
+            +Load()$ List~Player~
+        }
+        class PlayerRecord {
+            +string Name
+            +int Wins
+            +int Losses
+            +int Pushes
+        }
+    }
+
+    %% Inheritance and interfaces
+    Participant <|-- Player
+    Participant <|-- Dealer
+    IMoveDecider <|.. HumanMoveDecider
+    IMoveDecider <|.. SimpleMoveDecider
+    IMoveDecider <|.. BasicStrategyMoveDecider
+
+    %% Ownership
+    Participant *-- Hand : owns
+    Hand o-- Card : holds
+    Deck *-- Card : creates
+    Player --> IMoveDecider : asks for moves
+
+    %% Game and round
+    Game *-- Deck : creates
+    Game *-- Dealer : creates
+    Game *-- Player : creates
+    Game ..> Round : one per round
+    Round o-- Deck : borrows
+    Round o-- Dealer : borrows
+    Round o-- Player : borrows
+    Round ..> RoundEvaluator : evaluates
+
+    %% Storage and UI
+    Game ..> GameStorage : saves / loads
+    GameStorage ..> PlayerRecord : saves as
+    Game ..> ConsoleUi : input
+    Round ..> ConsoleUi : output
+    HumanMoveDecider ..> ConsoleUi : asks hit/stand
+    ConsoleUi ..> CardRenderer : draws cards
+
+    %% Object creation (every new)
+    Game ..> HumanMoveDecider : creates
+    Game ..> SimpleMoveDecider : creates
+    Game ..> BasicStrategyMoveDecider : creates
+    GameStorage ..> Player : creates
+    GameStorage ..> HumanMoveDecider : creates
