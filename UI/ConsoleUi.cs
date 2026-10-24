@@ -237,17 +237,17 @@ public static class ConsoleUi
     }
     public static void ShowRulesFileNotFound()
     {
-        Console.WriteLine("Hittade inte rules.txt. Använder standardregler.");
+        Console.WriteLine("Hittade inte rules.txt. Använder regelfilen.");
     }
 
     public static void ShowRulesFormatError(string message)
     {
-        Console.WriteLine($"Fel format i standardregler: {message}");
+        Console.WriteLine($"Fel format i regelfilen: {message}");
     }
 
     public static void ShowRulesReadError(string message)
     {
-        Console.WriteLine($"Kunde inte läsa standardregler: {message}");
+        Console.WriteLine($"Kunde inte läsa regelfilen: {message}");
     }
 
 }
