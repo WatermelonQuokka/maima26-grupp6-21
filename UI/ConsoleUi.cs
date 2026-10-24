@@ -101,7 +101,7 @@ public static class ConsoleUi
         {
             "s" or "simpel" => ComputerStrategy.Simple,
             "g" or "grund" => ComputerStrategy.Basic,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(nameof(strategyChoice), strategyChoice, null)
         };
     }
 
@@ -113,7 +113,7 @@ public static class ConsoleUi
         {
             "k" or "köpa" => Move.Hit,
             "s" or "stanna" => Move.Stand,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(nameof(answer), answer, null)
         };
     }
 
