@@ -51,13 +51,14 @@ public static class GameStorage
                 player.RestoreStats(record.Wins, record.Losses, record.Pushes);
                 players.Add(player);
             }
-
             return players;
-        }
-        catch (JsonException)
-        {
+            }
+              catch (JsonException)  
+            {
+
             ConsoleUi.ShowStorageWarning();
             return new List<Player>();
         }
-    }
+    }      
+
 }

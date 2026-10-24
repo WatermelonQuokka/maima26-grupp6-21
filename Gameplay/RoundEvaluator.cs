@@ -3,45 +3,81 @@ using TwentyOne.Participants;
 
 namespace TwentyOne.Gameplay;
 
-public static class RoundEvaluator
+public class RoundEvaluator
 {
-    public static RoundResult Evaluate(Hand playerHand, Hand dealerHand)
-    {
-        if (playerHand.IsNatural && dealerHand.IsNatural)
-        {
-            return RoundResult.Push;
-        }
-        if (playerHand.IsNatural)
-        {
-            return RoundResult.Blackjack;
-        }
-        if (dealerHand.IsNatural)
-        {
-            return RoundResult.Lose;
-        }
+    private RuleSet _ruleSet = new RuleSet();
 
+    // Constructor
+    public RoundEvaluator(RuleSet ruleSet)
+    {
+        _ruleSet = ruleSet;
+    }
+
+    public RoundResult Evaluate(Hand playerHand, Hand dealerHand)
+    {
+        int playerTotal = playerHand.GetTotalValue();
+        int dealerTotal = dealerHand.GetTotalValue();
+
+        // 1. If player busts, player loses
         if (playerHand.IsBust())
         {
             return RoundResult.Lose;
         }
+        // 2.Check house rule for natural 21 beats 3-card 21
+        if (_ruleSet.NaturalBlackjackBeatsThreeCard21)
+        {
+            if (playerHand.IsNatural && dealerTotal == 21 && dealerHand.GetCards().Count >= 3)
+            {
+                return RoundResult.Blackjack;
+            }
+            if (dealerHand.IsNatural && playerTotal == 21 && playerHand.GetCards().Count >= 3)
+            {
+                return RoundResult.Lose;
+            }
+        }
+        else
+        {
 
+            if (playerHand.IsNatural && dealerTotal == 21 && dealerHand.GetCards().Count >= 3)
+                return RoundResult.Push;
+
+            if (dealerHand.IsNatural && playerTotal == 21 && playerHand.GetCards().Count >= 3)
+                return RoundResult.Push;
+        }
+        // 3. Check Natural 21 scenarios (Natural beats multi-card 21)
+        if (playerHand.IsNatural && dealerHand.IsNatural)
+        {
+            return RoundResult.Push; // Both have Natural 21
+        }
+
+        if (playerHand.IsNatural)
+        {
+            return RoundResult.Blackjack; // Player Natural beats everything (including dealer 3-card 21)
+        }
+
+        if (dealerHand.IsNatural)
+        {
+            return RoundResult.Lose; // Dealer Natural beats player multi-card 21
+        }
+
+        // 4. Check if dealer busts
         if (dealerHand.IsBust())
         {
             return RoundResult.Win;
         }
 
-        int playerTotal = playerHand.GetTotalValue();
-        int dealerTotal = dealerHand.GetTotalValue();
-
+        // 5.Higher points win
         if (playerTotal > dealerTotal)
         {
             return RoundResult.Win;
         }
-        if (playerTotal < dealerTotal)
+        else if (playerTotal < dealerTotal)
         {
-            return RoundResult.Lose;
+            return RoundResult.Lose; // Player loses if their total is lower than the dealer's
         }
-
-        return RoundResult.Push;
+        else
+        {
+            return RoundResult.Push; // Push only when both totalsare exactly equal
+        }
     }
 }

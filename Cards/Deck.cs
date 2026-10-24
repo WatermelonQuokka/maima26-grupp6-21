@@ -3,22 +3,26 @@ namespace TwentyOne.Cards;
 public class Deck
 {
     private List<Card> _cards = new();
-    private const int CardsBeforeReshuffle = 15;
+    private readonly int _reshuffleThreshold;
+    private readonly int _numberOfDecks;
 
     public int Count => _cards.Count;
 
 
-    public Deck()
+    public Deck(int numberOfDecks = 1, int reshuffleThreshold = 15)
     {
-        Reset();
+        _numberOfDecks = numberOfDecks;
+        _reshuffleThreshold = reshuffleThreshold;
+        Reset(_numberOfDecks);
     }
 
-    private void Reset()
+    private void Reset(int numberOfDecks = 1)
     {
         // clears the remaining deck
         _cards.Clear();
         // looping through enums suits * ranks
         // = total deck (4 * 13) = 52
+        for (int i = 0; i < numberOfDecks; i++)
         foreach(Suit suit in Enum.GetValues<Suit>())
         {
             foreach(Rank rank in Enum.GetValues<Rank>())
@@ -56,9 +60,9 @@ public class Deck
     // reshuffles if the card count is less than the constant
     public void ReshuffleIfLow()
     {
-        if (Count < CardsBeforeReshuffle)
+        if (Count < _reshuffleThreshold)
         {
-            Reset();
+            Reset(_numberOfDecks);
         }
     }
 }

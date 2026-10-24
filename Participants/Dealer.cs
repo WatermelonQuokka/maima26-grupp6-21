@@ -1,11 +1,13 @@
+using TwentyOne.Gameplay;
 namespace TwentyOne.Participants;
 
 public class Dealer : Participant
 {
-    private const int DealerStandsAt = 17;
-    
-    public Dealer() : base("Givaren")
+    private readonly RuleSet _ruleSet;
+    private const int DealerStandsAt = 17 ;
+    public Dealer(RuleSet? ruleSet = null) : base("Givaren")
     {
+        _ruleSet = ruleSet ?? new RuleSet();
     }
 
     public bool IsHoleCardRevealed { get; private set; }
@@ -22,6 +24,15 @@ public class Dealer : Participant
 
     public bool ShouldHit()
     {
-        return Hand.GetTotalValue() < DealerStandsAt;
+        int score = Hand.GetTotalValue();
+        if (score < DealerStandsAt)
+        {
+            return true;
+        }
+        if (score == DealerStandsAt && Hand.IsSoft() && _ruleSet.DealerHitsOnSoft17)
+        {
+            return true;
+        }
+        return false;
     }
 }

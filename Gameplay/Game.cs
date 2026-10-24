@@ -12,10 +12,14 @@ public class Game
     private const int MaxPlayers = 5;
     private readonly List<Player> _players = new();
     private readonly List<Player> _savedPlayers;
-    private readonly Deck _deck = new();
-    private readonly Dealer _dealer = new();
+    private readonly RuleSet _rules;
+    private readonly Deck _deck;
+    private readonly Dealer _dealer;
     public Game()
     {
+        _rules = RuleSet.LoadFromFile("rules.txt");
+        _deck = new Deck(_rules.NumberOfDecks, _rules.ReshuffleThreshold);
+        _dealer = new Dealer(_rules);
         _savedPlayers = GameStorage.Load();
     }
 
@@ -27,7 +31,7 @@ public class Game
         // Main game loop for rounds
         do
         {
-            Round round = new(_players, _deck, _dealer);
+            Round round = new(_players, _deck, _dealer, _rules);
             round.Play();
             GameStorage.Save(_savedPlayers);
             ConsoleUi.ShowStatistics(_players);
