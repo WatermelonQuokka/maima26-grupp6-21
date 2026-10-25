@@ -1,0 +1,4 @@
+DealerHitsOnSoft17 = false
+NumberOfDecks = 6
+ReshuffleThreshold = 15
+NaturalBlackjackBeatsThreeCard21 = true

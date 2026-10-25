@@ -1,0 +1,64 @@
+using System.Text.Json;
+using TwentyOne.Participants;
+using TwentyOne.Deciders;
+using TwentyOne.UI;
+
+namespace TwentyOne.Storage;
+
+public static class GameStorage
+{
+    private const string FolderPath = "Data";
+    private const string FileName = "PlayersData.json";
+    private static readonly string FilePath = Path.Combine(FolderPath, FileName);
+
+    public static void Save(List<Player> players)
+    {
+        List<PlayerRecord> records = new List<PlayerRecord>();
+        foreach (Player player in players)
+        {
+            records.Add(new PlayerRecord
+            {
+                Name = player.Name,
+                Wins = player.Wins,
+                Losses = player.Losses,
+                Pushes = player.Pushes
+            });
+        }
+
+        JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
+        string json = JsonSerializer.Serialize(records, options);
+
+        Directory.CreateDirectory(FolderPath);
+        File.WriteAllText(FilePath, json);
+    }
+
+    public static List<Player> Load()
+    {
+        if (!File.Exists(FilePath))
+        {
+            return new List<Player>();
+        }
+
+        try
+        {
+            string json = File.ReadAllText(FilePath);
+            List<PlayerRecord> records = JsonSerializer.Deserialize<List<PlayerRecord>>(json) ?? new List<PlayerRecord>();
+
+            List<Player> players = new List<Player>();
+            foreach (PlayerRecord record in records)
+            {
+                Player player = new Player(record.Name, new HumanMoveDecider());
+                player.RestoreStats(record.Wins, record.Losses, record.Pushes);
+                players.Add(player);
+            }
+            return players;
+        }
+        catch (JsonException)
+        {
+
+            ConsoleUi.ShowStorageWarning();
+            return new List<Player>();
+        }
+    }
+
+}
