@@ -73,7 +73,6 @@ The Mermaid source is in [`docs/class-diagram.mmd`](docs/class-diagram.mmd).
 |---|---|---|---|
 | Ahmad AlSibai (noxsaid) | 1. Card graphics in the console | `CardRenderer`, `ConsoleUi.ShowCards` | Input helpers, `RoundEvaluator`, `Hand.IsSoft`, statistics, `GameStorage` |
 | Daniel Chis (WatermelonQuokka) | 2. Computer players with strategy | `SimpleMoveDecider`, `BasicStrategyMoveDecider`, `ComputerStrategy` | `IMoveDecider`, `HumanMoveDecider`, `Card`, `Deck`, `Participant`, `Player`, `Dealer`, `Game`, `Round`, the hit/stand turn |
-| _name_ | _tillval_ | _classes_ | _fill in_ |
 | Negar Shilanan (negarshilanan-png) | 3. House rules from a file | `RuleSet`, `Hand`, `ConsoleUi`| `rules.txt` |
 
 Tillval 1 (card graphics): a card is drawn as a framed box with the value in two corners and the suit in the middle. The dealer's hole card is drawn face down (▒) and the cards of a hand are shown side by side. `CardRenderer` only returns the lines of one card, and `ConsoleUi` weaves them together and sets the colour.
