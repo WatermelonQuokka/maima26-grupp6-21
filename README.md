@@ -96,7 +96,7 @@ The house rules are read from `rules.txt` in the repository root (one `Key = val
 |---|---|---|
 | `DealerHitsOnSoft17` | `false` | If `true`, the dealer draws on a soft 17 |
 | `NumberOfDecks` | `6` | Number of decks in the shoe (more than 0) |
-| `ReshuffleThreshold` | `15` | A new, shuffled deck is built when fewer cards remain at the start of a round |
+| `ReshuffleThreshold` | `15` | Number of cards left in the shoe. If fewer cards remain at the start of a round, the whole shoe (all decks) is rebuilt and shuffled. This is never done in the middle of a round. |
 | `NaturalBlackjackBeatsThreeCard21` | `true` | If `false`, a natural against a 21 of three or more cards is a push |
 
 If the file is missing, the game starts with default rules and tells the user. An invalid value gives a message and a default is used for that setting.
