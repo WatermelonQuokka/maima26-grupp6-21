@@ -66,8 +66,7 @@ Design decisions:
 | Member (GitHub) | Optional feature (tillval) | Class(es) | Other parts |
 |---|---|---|---|
 | Ahmad AlSibai (noxsaid) | 1. Card graphics in the console | `CardRenderer`, `ConsoleUi.ShowCards` | Input helpers, `RoundEvaluator`, `Hand.IsSoft`, statistics, `GameStorage` |
-| _name_ | _tillval_ | _classes_ | _fill in_ |
-| _name_ | _tillval_ | _classes_ | _fill in_ |
+| Daniel Chis (WatermelonQuokka) | 2. Computer players with strategy | `SimpleMoveDecider`, `BasicStrategyMoveDecider`, `ComputerStrategy` | `IMoveDecider`, `HumanMoveDecider`, `Card`, `Deck`, `Participant`, `Player`, `Dealer`, `Game`, `Round`, the hit/stand turn |
 | _name_ | _tillval_ | _classes_ | _fill in_ |
 
 Tillval 1 (card graphics): a card is drawn as a framed box with the value in two corners and the suit in the middle. The dealer's hole card is drawn face down (▒) and the cards of a hand are shown side by side. `CardRenderer` only returns the lines of one card, and `ConsoleUi` weaves them together and sets the colour.
@@ -83,10 +82,12 @@ The rules follow the assignment. The game is played with these details and devia
 - **Natural 21** (ace plus a ten-value card as the first two cards) beats a 21 made of three or more cards, and natural against natural is a push. A player with a natural does not get a turn (no hit).
 - **The dealer** reveals the hole card, hits on 16 or lower and stands on 17 or higher. The dealer never looks at the hole card in advance, and the round is always played to the end.
 - **Statistics:** a natural counts as a win. The table after each round only shows this session's players.
-- **Deviations from the base version in the assignment** (all caused by tillval 3 or the console):
-  - The default `rules.txt` uses **6 decks** and reshuffles when fewer than 15 cards remain. The base version has one deck of 52 cards.
+- **Deviations from the base version in the assignment:**
+  - **Reshuffle threshold:** the assignment says to reshuffle before a round when fewer than 15 cards remain. With 4–5 players, a round can use more than that, so the deck could run out mid-round. The assignment also says to only reshuffle between rounds and that the deck must never run out, and all three can't hold at once. We therefore reshuffle when fewer than (players + 1) × 6 cards remain, or fewer than ReshuffleThreshold, whichever is higher, still only between rounds. A simulation (2000 sessions × 200 rounds, 1–5 players, 1 and 6 decks) never ran out. Before the fix, 5 players ran out in every session.
+  - The default `rules.txt` uses **6 decks**, the base version has one deck of 52 cards.
   - Clubs and spades are drawn in **grey** instead of black, because black text is hard to read on a dark console.
 - Computer players are not saved to the file, only human players.
+
 
 ### `rules.txt`
 
@@ -96,7 +97,7 @@ The house rules are read from `rules.txt` in the repository root (one `Key = val
 |---|---|---|
 | `DealerHitsOnSoft17` | `false` | If `true`, the dealer draws on a soft 17 |
 | `NumberOfDecks` | `6` | Number of decks in the shoe (more than 0) |
-| `ReshuffleThreshold` | `15` | Number of cards left in the shoe. If fewer cards remain at the start of a round, the whole shoe (all decks) is rebuilt and shuffled. This is never done in the middle of a round. |
+| `ReshuffleThreshold` | `15` | Number of cards left in the shoe. If fewer remain at the start of a round, or fewer than (players + 1) × 6, whichever is higher, the whole shoe (all decks) is rebuilt and shuffled. This is never done in the middle of a round. |
 | `NaturalBlackjackBeatsThreeCard21` | `true` | If `false`, a natural against a 21 of three or more cards is a push |
 
 If the file is missing, the game starts with default rules and tells the user. An invalid value gives a message and a default is used for that setting.
@@ -105,3 +106,5 @@ If the file is missing, the game starts with default rules and tells the user. A
 
 - `GameStorage.Save` has no error handling for file errors (for example a locked file), and `GameStorage.Load` only handles `JsonException`.
 - Two commits (explicit types in `GameStorage` and the call to `ShowStatistics`) show the author "trial" because of a mistake in Ahmad's Git configuration. They are his.
+- If `ReshuffleThreshold` in `rules.txt` is lower than the table needs, it's raised without telling the user.
+- 6 cards per hand is a practical limit verified by simulation, not a guarantee: a hand can, very rarely, use more.
