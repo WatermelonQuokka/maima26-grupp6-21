@@ -57,10 +57,11 @@ public class Deck
             _cards[j] = temp;
         }
     }
-    // reshuffles if the card count is less than the constant
-    public void ReshuffleIfLow()
+    // reshuffles if the card count is less than the threshold
+    // or cards needed per round
+    public void ReshuffleIfLow(int cardsNeededPerRound)
     {
-        if (Count < _reshuffleThreshold)
+        if (Count < _reshuffleThreshold || Count < cardsNeededPerRound)
         {
             Reset(_numberOfDecks);
         }
