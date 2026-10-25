@@ -240,11 +240,6 @@ public static class ConsoleUi
         Console.WriteLine("Hittade inte regelfilen. Använder standardregler.");
     }
 
-    public static void ShowRulesFormatError(string message)
-    {
-        Console.WriteLine($"Fel format i regelfilen: {message}");
-    }
-
     public static void ShowRulesReadError(string message)
     {
         Console.WriteLine($"Kunde inte läsa regelfilen: {message}");

@@ -7,8 +7,10 @@ classDiagram
             -int MaxPlayers$
             -List~Player~ _players
             -List~Player~ _savedPlayers
+            -RuleSet _rules
             -Deck _deck
             -Dealer _dealer
+            +Game()
             +Run() void
             -AddPlayers() void
             -IsNameTaken(string name) bool
@@ -17,9 +19,11 @@ classDiagram
         class Round {
             -List~Player~ _players
             -Deck _deck
+            -RuleSet _rules
             -Dealer _dealer
             -int OpeningCardCount$
-            +Round(List~Player~ players, Deck deck, Dealer dealer)
+            -int CardsReservedPerHand$
+            +Round(List~Player~ players, Deck deck, Dealer dealer, RuleSet rules)
             +Play() void
             -RecordResult(Player player, RoundResult result)$ void
             -PlayTurn(Player player) void
@@ -28,8 +32,16 @@ classDiagram
             -PlayDealerTurn() void
         }
         class RoundEvaluator {
-            <<static>>
-            +Evaluate(Hand playerHand, Hand dealerHand)$ RoundResult
+            -RuleSet _ruleSet
+            +RoundEvaluator(RuleSet ruleSet)
+            +Evaluate(Hand playerHand, Hand dealerHand) RoundResult
+        }
+        class RuleSet {
+            +bool DealerHitsOnSoft17
+            +int NumberOfDecks
+            +int ReshuffleThreshold
+            +bool NaturalBlackjackBeatsThreeCard21
+            +LoadFromFile(string filePath)$ RuleSet
         }
         class RoundResult {
             <<enumeration>>
@@ -64,9 +76,10 @@ classDiagram
             ~RestoreStats(int wins, int losses, int pushes) void
         }
         class Dealer {
+            -RuleSet _ruleSet
             -int DealerStandsAt$
             +bool IsHoleCardRevealed
-            +Dealer()
+            +Dealer(RuleSet ruleSet)
             +RevealHoleCard() void
             +HideHoleCard() void
             +ShouldHit() bool
@@ -84,12 +97,13 @@ classDiagram
         }
         class Deck {
             -List~Card~ _cards
-            -int CardsBeforeReshuffle$
+            -int _reshuffleThreshold
+            -int _numberOfDecks
             +int Count
-            +Deck()
+            +Deck(int numberOfDecks, int reshuffleThreshold)
             +Draw() Card
-            +ReshuffleIfLow() void
-            -Reset() void
+            +ReshuffleIfLow(int cardsNeededPerRound) void
+            -Reset(int numberOfDecks) void
             -Shuffle() void
         }
         class Hand {
@@ -149,6 +163,11 @@ classDiagram
             -HardRow(int total)$ int
             -SoftRow(int total)$ int
         }
+        class ComputerStrategy {
+            <<enumeration>>
+            Simple
+            Basic
+        }
     }
 
     namespace UI {
@@ -158,10 +177,27 @@ classDiagram
             +ReadInt(string prompt, int min, int max)$ int
             +ReadNonEmptyText(string prompt)$ string
             +ReadChoice(string prompt, List~string~ validOptions)$ string
+            +AskPlayerCount(int minPlayers, int maxPlayers)$ int
+            +AskIfHuman(int seatNumber)$ bool
+            +AskPlayerName(int seatNumber)$ string
+            +AskComputerStrategy(string name)$ ComputerStrategy
+            +AskPlayerMove()$ Move
             +ShowStatistics(List~Player~ players)$ void
             +ShowCards(IEnumerable~Card~ cards, bool hideSecondCard)$ void
             +ShowHand(Participant participant, bool hideSecondCard)$ void
             +ShowResult(Player player, RoundResult result)$ void
+            +ShowGoodbyeMessage()$ void
+            +ShowNameTakenError()$ void
+            +ShowPlayerTurn(string playerName)$ void
+            +ShowDealerUpCard(string dealerName, Card card)$ void
+            +ShowNaturalTwentyOneMessage(string playerName)$ void
+            +ShowBustMessage()$ void
+            +ShowInputEndedMessage()$ void
+            +ShowStorageWarning()$ void
+            +WriteLine()$ void
+            +ShowRulesFileNotFound()$ void
+            +ShowRulesFormatError()$ void
+            +ShowRulesReadError(string message)$ void
             -IsRed(Card card)$ bool
         }
     }
@@ -212,11 +248,17 @@ classDiagram
     Game *-- Deck : creates
     Game *-- Dealer : creates
     Game *-- Player : creates
+    Game --> RuleSet : loads and keeps
     Game ..> Round : one per round
     Round o-- Deck : borrows
     Round o-- Dealer : borrows
     Round o-- Player : borrows
-    Round ..> RoundEvaluator : evaluates
+    Round o-- RuleSet : borrows
+    Round ..> RoundEvaluator : creates per round
+
+    %% House rules
+    Dealer --> RuleSet : soft 17 rule
+    RoundEvaluator --> RuleSet : natural 21 rule
 
     %% Storage and UI
     Game ..> GameStorage : saves / loads
@@ -224,6 +266,8 @@ classDiagram
     Game ..> ConsoleUi : input
     Round ..> ConsoleUi : output
     HumanMoveDecider ..> ConsoleUi : asks hit/stand
+    RuleSet ..> ConsoleUi : rule file messages
+    GameStorage ..> ConsoleUi : storage warning
     ConsoleUi ..> CardRenderer : draws cards
 
     %% Object creation (every new)
