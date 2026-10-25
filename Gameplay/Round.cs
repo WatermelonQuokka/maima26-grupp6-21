@@ -11,6 +11,7 @@ public class Round
     private readonly RuleSet _rules;
     private readonly Dealer _dealer;
     private const int OpeningCardCount = 2;
+    private const int CardsReservedPerHand = 6;
 
     public Round(List<Player> players, Deck deck, Dealer dealer, RuleSet rules)
     {
@@ -101,7 +102,8 @@ public class Round
             player.Hand.Clear();
         }
         _dealer.Hand.Clear();
-        _deck.ReshuffleIfLow();
+        int cardsNeededPerRound = (_players.Count + 1) * CardsReservedPerHand;
+        _deck.ReshuffleIfLow(cardsNeededPerRound);
         _dealer.HideHoleCard();
         for (int i = 0; i < OpeningCardCount; i++)
         {
