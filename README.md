@@ -53,7 +53,13 @@ Everything that is printed or read goes through ConsoleUi
 | `Storage/` | `GameStorage`, `PlayerRecord` | Saves and loads players as JSON in `Data/PlayersData.json` (`Data` is in `.gitignore`) |
 | `UI/` | `ConsoleUi` | All input and output: prompts, validation, tables, colours |
 
-Design decisions:
+### Class diagram
+
+![Class diagram](docs/mermaid-diagram-2026-10-25-150945.png)
+
+The Mermaid source is in [`docs/class-diagram.mmd`](docs/class-diagram.mmd).
+
+### Design decisions:
 - **No Console in the rule classes.** `Card`, `Deck`, `Hand`, `Participant`, `Player`, `Dealer`, `Round` and the rest of the game logic never print or read. Only `ConsoleUi` talks to the user.
 - **Who decides a player's move?** `Player` holds an `IMoveDecider`, so a human and the computer players play through exactly the same `Round` code.
 - **The dealer is a `Participant`, not a `Player`.** They share a name and a hand, but the dealer has no choice, only a fixed rule.
