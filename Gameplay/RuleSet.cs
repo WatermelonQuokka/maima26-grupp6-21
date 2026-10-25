@@ -1,3 +1,4 @@
+
 using TwentyOne.UI;
 
 namespace TwentyOne.Gameplay
@@ -32,44 +33,72 @@ namespace TwentyOne.Gameplay
                     // Split line into key and value by =
                     string[] parts = line.Split('=');
 
-                    if (parts.Length == 2)
+                     if (parts.Length == 2)
                     {
                         string key = parts[0].Trim();
                         string value = parts[1].Trim();
 
-                        // Set values based on key name
+                         // Set values based on key name
                         if (key == "DealerHitsOnSoft17")
                         {
-                            rules.DealerHitsOnSoft17 = bool.Parse(value);
+                            if (bool.TryParse(value, out bool result))
+                            {
+                                rules.DealerHitsOnSoft17 = result;
+                            }
+                            else
+                            {
+                                ConsoleUi.ShowRulesFormatError();
+                            }
                         }
-                        else if (key == "NumberOfDecks")
+                       else if (key == "NumberOfDecks")
                         {
-                            rules.NumberOfDecks = int.Parse(value);
+                            if (int.TryParse(value, out int decks) && decks > 0)
+                            {
+                                rules.NumberOfDecks = decks;
+                            }
+                            else
+                            {
+                                ConsoleUi.ShowRulesFormatError();
+                                rules.NumberOfDecks = 1;
+                            }
                         }
                         else if (key == "ReshuffleThreshold")
                         {
-                            rules.ReshuffleThreshold = int.Parse(value);
+                            if (int.TryParse(value, out int threshold) && threshold > 0)
+                            {
+                                rules.ReshuffleThreshold = threshold;
+                            }
+                            else
+                            {
+                                ConsoleUi.ShowRulesFormatError();
+                            }
                         }
                         else if (key == "NaturalBlackjackBeatsThreeCard21")
                         {
-                            rules.NaturalBlackjackBeatsThreeCard21 = bool.Parse(value);
+                            if (bool.TryParse(value, out bool result))
+                            {
+                                rules.NaturalBlackjackBeatsThreeCard21 = result;
+                            }
+                            else
+                            {
+                                ConsoleUi.ShowRulesFormatError();
+                            }
                         }
                     }
                 }
             }
-            catch (FormatException ex)
-            {
-                // If error happens, notify user and use default rules
-                ConsoleUi.ShowRulesFormatError(ex.Message);
-            }
-            catch (Exception ex)
+            catch (Exception ex)  
             {
                 ConsoleUi.ShowRulesReadError(ex.Message);
             }
 
             return rules;
+            }
         }
-
     }
-}
+
+       
+
+   
+
 

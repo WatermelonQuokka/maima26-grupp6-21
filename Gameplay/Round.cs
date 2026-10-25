@@ -35,11 +35,11 @@ public class Round
         RoundEvaluator evaluator = new RoundEvaluator(_rules);
 
         foreach (Player player in _players)
-    {
-        RoundResult result = evaluator.Evaluate(player.Hand, _dealer.Hand);
-        RecordResult(player, result);
-        ConsoleUi.ShowResult(player, result);
-    }
+        {
+            RoundResult result = evaluator.Evaluate(player.Hand, _dealer.Hand);
+            RecordResult(player, result);
+            ConsoleUi.ShowResult(player, result);
+        }
     }
 
     private static void RecordResult(Player player, RoundResult result)
@@ -85,14 +85,14 @@ public class Round
             }
         }
         while (move == Move.Hit && !player.Hand.IsBust());
-    
+
         // Skriv ut "Spräckt!" om spelaren har spräckt
         if (player.Hand.IsBust())
         {
             ConsoleUi.ShowBustMessage();
         }
     }
-    
+
     // deals two opening cards to each player and the dealer
     private void DealOpeningCards()
     {

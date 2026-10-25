@@ -39,10 +39,15 @@ public class RoundEvaluator
         {
 
             if (playerHand.IsNatural && dealerTotal == 21 && dealerHand.GetCards().Count >= 3)
+            {
                 return RoundResult.Push;
+            }
 
             if (dealerHand.IsNatural && playerTotal == 21 && playerHand.GetCards().Count >= 3)
+            {
                 return RoundResult.Push;
+            }
+
         }
         // 3. Check Natural 21 scenarios (Natural beats multi-card 21)
         if (playerHand.IsNatural && dealerHand.IsNatural)

@@ -52,13 +52,13 @@ public static class GameStorage
                 players.Add(player);
             }
             return players;
-            }
-              catch (JsonException)  
-            {
+        }
+        catch (JsonException)
+        {
 
             ConsoleUi.ShowStorageWarning();
             return new List<Player>();
         }
-    }      
+    }
 
 }
