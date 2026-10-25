@@ -1,4 +1,4 @@
-using System.Security.Cryptography.X509Certificates;
+
 using TwentyOne.UI;
 
 namespace TwentyOne.Gameplay
@@ -45,6 +45,10 @@ namespace TwentyOne.Gameplay
                             {
                                 rules.DealerHitsOnSoft17 = result;
                             }
+                            else
+                            {
+                                ConsoleUi.ShowRulesFormatError();
+                            }
                         }
                        else if (key == "NumberOfDecks")
                         {
@@ -54,7 +58,8 @@ namespace TwentyOne.Gameplay
                             }
                             else
                             {
-                                rules.NumberOfDecks = 6;
+                                ConsoleUi.ShowRulesFormatError();
+                                rules.NumberOfDecks = 1;
                             }
                         }
                         else if (key == "ReshuffleThreshold")
@@ -63,12 +68,20 @@ namespace TwentyOne.Gameplay
                             {
                                 rules.ReshuffleThreshold = threshold;
                             }
+                            else
+                            {
+                                ConsoleUi.ShowRulesFormatError();
+                            }
                         }
                         else if (key == "NaturalBlackjackBeatsThreeCard21")
                         {
                             if (bool.TryParse(value, out bool result))
                             {
                                 rules.NaturalBlackjackBeatsThreeCard21 = result;
+                            }
+                            else
+                            {
+                                ConsoleUi.ShowRulesFormatError();
                             }
                         }
                     }
